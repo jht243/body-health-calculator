@@ -110,11 +110,11 @@ const toolInputParser = z.object({
 
 const tools: Tool[] = [
   {
-    name: "mortgage-calculator",
+    name: "mortgage-calculator-text",
     description:
-      "Use this when a user wants a text summary of mortgage payment information. Provide purchase price, interest rate, and loan term to receive a written breakdown.",
+      "Provide a quick textual mortgage summary. This tool returns plain text only and does not render a widget.",
     inputSchema: toolInputSchema,
-    title: "Mortgage Calculator",
+    title: "Mortgage Calculator (Text)",
     annotations: {
       destructiveHint: false,
       openWorldHint: false,
