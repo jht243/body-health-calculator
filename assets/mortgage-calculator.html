@@ -388,22 +388,30 @@
 
       .breakdown-layout {
         display: grid;
-        grid-template-columns: minmax(260px, 340px) minmax(0, 1fr);
+        grid-template-columns: minmax(220px, 320px) minmax(0, 1fr);
         gap: 16px;
         align-items: stretch;
       }
 
-      .breakdown-chart {
+      .breakdown-panel {
         position: relative;
         background: linear-gradient(135deg, rgba(30, 33, 56, 0.8), rgba(25, 28, 48, 0.85));
         border: 1px solid rgba(71, 85, 105, 0.3);
         border-radius: 12px;
         padding: 24px;
+        box-shadow: 0 4px 12px rgba(10, 13, 28, 0.35);
+        min-height: var(--breakdown-panel-h);
+      }
+
+      .breakdown-chart {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-        box-shadow: 0 4px 12px rgba(10, 13, 28, 0.35);
         min-height: var(--breakdown-panel-h);
+        background: transparent;
+        border: none;
+        box-shadow: none;
       }
 
       .breakdown-chart canvas {
@@ -757,7 +765,7 @@
         }
       }
 
-      @media (max-width: 900px) {
+      @media (max-width: 700px) {
         .breakdown-layout {
           grid-template-columns: 1fr;
           gap: 16px;
@@ -993,7 +1001,7 @@
                   <p>Visualize the components of your monthly payment.</p>
                 </header>
                 <div class="breakdown-card">
-                  <div class="breakdown-layout">
+                  <div class="breakdown-panel breakdown-layout">
                     <div class="breakdown-chart">
                       <canvas id="breakdownChart" width="220" height="220"></canvas>
                       <div class="chart-value" id="chartTotal">
