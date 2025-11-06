@@ -29,7 +29,7 @@
         padding: 0 var(--app-pad-x) 32px;
         display: grid;
         gap: 18px;
-        background: transparent;
+        background: linear-gradient(135deg, rgba(25, 28, 48, 0.9), rgba(20, 23, 42, 0.95));
         border: none;
         border-radius: 0;
         box-shadow: none;
@@ -1930,6 +1930,12 @@
           ];
           
           drawDonutChart(ctx, data, colors);
+          // Constrain list to match chart height (fluid, computed per render)
+          const listEl = document.getElementById("breakdown_list");
+          if (listEl) {
+            const chartH = breakdownOutputs.canvas.getBoundingClientRect().height;
+            listEl.style.height = `${Math.max(160, Math.round(chartH))}px`;
+          }
         };
 
         const syncBreakdownToMain = () => {
