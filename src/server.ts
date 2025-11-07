@@ -47,6 +47,84 @@ if (!fs.existsSync(LOGS_DIR)) {
   fs.mkdirSync(LOGS_DIR, { recursive: true });
 }
 
+// FRED daily mortgage rate endpoint (/api/rate)
+type RateCache = { ts: number; payload: any } | null;
+let fredRateCache: RateCache = null;
+
+async function fetchFredLatestRate(): Promise<{ raw: number; adjusted: number; observationDate: string; source: string; } | null> {
+  const FRED_API_KEY = process.env.FRED_API_KEY;
+  const seriesId = process.env.FRED_SERIES_ID || "MORTGAGE30US";
+  if (!FRED_API_KEY) {
+    console.error("FRED_API_KEY not set");
+    return null;
+  }
+
+  const url = new URL("https://api.stlouisfed.org/fred/series/observations");
+  url.searchParams.set("series_id", seriesId);
+  url.searchParams.set("api_key", FRED_API_KEY);
+  url.searchParams.set("file_type", "json");
+  url.searchParams.set("sort_order", "desc");
+  url.searchParams.set("limit", "14");
+
+  try {
+    const resp = await fetch(url.toString());
+    if (!resp.ok) throw new Error(`FRED error ${resp.status}`);
+    const data = await resp.json();
+    const obs = Array.isArray(data?.observations) ? data.observations : [];
+    const firstValid = obs.find((o: any) => o && o.value && o.value !== ".");
+    if (!firstValid) return null;
+    const raw = parseFloat(firstValid.value);
+    if (!Number.isFinite(raw)) return null;
+    const adjusted = raw + 0.5;
+    return { raw, adjusted, observationDate: firstValid.date, source: seriesId };
+  } catch (e) {
+    console.error("FRED fetch failed:", e);
+    return null;
+  }
+}
+
+async function handleRate(req: IncomingMessage, res: ServerResponse) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Headers", "content-type");
+  res.setHeader("Content-Type", "application/json");
+
+  if (req.method === "OPTIONS") {
+    res.writeHead(204).end();
+    return;
+  }
+
+  if (req.method !== "GET") {
+    res.writeHead(405).end(JSON.stringify({ error: "Method not allowed" }));
+    return;
+  }
+
+  const now = Date.now();
+  const TTL = 60 * 60 * 1000; // 1 hour
+  if (fredRateCache && now - fredRateCache.ts < TTL) {
+    res.setHeader("Cache-Control", "public, max-age=3600");
+    res.writeHead(200).end(JSON.stringify(fredRateCache.payload));
+    return;
+  }
+
+  const result = await fetchFredLatestRate();
+  let payload: any;
+  if (result) {
+    const rounded = Math.round(result.adjusted * 10) / 10;
+    payload = {
+      ratePercent: rounded,
+      rawPercent: result.raw,
+      adjustedAdded: 0.5,
+      observationDate: result.observationDate,
+      source: result.source,
+    };
+  } else {
+    payload = { ratePercent: 5.5, rawPercent: null, adjustedAdded: 0.5, observationDate: null, source: "fallback" };
+  }
+  fredRateCache = { ts: now, payload };
+  res.setHeader("Cache-Control", "public, max-age=3600");
+  res.writeHead(200).end(JSON.stringify(payload));
+}
+
 type AnalyticsEvent = {
   timestamp: string;
   event: string;
@@ -331,6 +409,7 @@ const subscribePath = "/api/subscribe";
 const analyticsPath = "/analytics";
 const trackEventPath = "/api/track";
 const healthPath = "/health";
+const ratePath = "/api/rate";
 
 const ANALYTICS_PASSWORD = process.env.ANALYTICS_PASSWORD || "changeme123";
 
@@ -1145,6 +1224,11 @@ const httpServer = createServer(
 
     if (url.pathname === subscribePath) {
       await handleSubscribe(req, res);
+      return;
+    }
+
+    if (url.pathname === ratePath) {
+      await handleRate(req, res);
       return;
     }
 
