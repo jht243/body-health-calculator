@@ -596,6 +596,69 @@ function createMortgageCalculatorServer(): Server {
         // Debug log
         console.log("Captured meta:", { userLocation, userLocale, userAgent });
 
+        // If ChatGPT didn't pass structured arguments, try to infer key numbers from freeform text in meta
+        try {
+          if (args.home_value === undefined || args.home_value === null) {
+            const candidates: any[] = [
+              meta["openai/userPrompt"],
+              meta["openai/userText"],
+              meta["openai/lastUserMessage"],
+              meta["openai/inputText"],
+              meta["openai/requestText"],
+            ];
+            const userText = candidates.find((t) => typeof t === "string" && t.trim().length > 0) || "";
+            if (userText) {
+              const parseAmountToNumber = (s: string): number | null => {
+                const lower = s.toLowerCase().replace(/[,$\s]/g, "").trim();
+                const m = lower.match(/^(\d+(?:\.\d+)?)(m)$/);
+                const k = lower.match(/^(\d+(?:\.\d+)?)(k)$/);
+                if (m) return Math.round(parseFloat(m[1]) * 1_000_000);
+                if (k) return Math.round(parseFloat(k[1]) * 1_000);
+                const n = Number(lower.replace(/[^0-9.]/g, ""));
+                return Number.isFinite(n) ? Math.round(n) : null;
+              };
+
+              // 1) Targeted pattern allowing determiners between preposition and number (e.g., "on a 500,000 home")
+              const targeted = userText.match(/(?:home|house|property|mortgage)\b[^\d$]{0,40}?\$?([\d,.]+\s*[kKmM]?)/i)
+                || userText.match(/\$\s*([\d,.]+\s*[kKmM]?)/i)
+                || userText.match(/([\d,.]+\s*[kKmM]?)\s*(?:home|house|property|mortgage)\b/i);
+
+              const tryAssign = (raw: string | null | undefined) => {
+                if (!raw) return false;
+                const parsed = parseAmountToNumber(raw);
+                if (parsed && parsed >= 50_000 && parsed <= 100_000_000) {
+                  args.home_value = parsed;
+                  console.log("[Inference] home_value inferred from user text", { home_value: parsed, source: userText });
+                  return true;
+                }
+                return false;
+              };
+
+              let assigned = false;
+              if (targeted && targeted[1]) {
+                assigned = tryAssign(targeted[1]);
+              }
+
+              // 2) Fallback: scan for any plausible amount near keywords within a small window
+              if (!assigned) {
+                const keywordRe = /(home|house|property|mortgage)/i;
+                const amountRe = /\$?\b(\d{1,3}(?:[.,]\d{3})+(?:\.\d+)?|\d+(?:\.\d+)?\s*[kKmM]?)\b/g;
+                let match: RegExpExecArray | null;
+                while ((match = amountRe.exec(userText)) !== null) {
+                  const start = Math.max(0, match.index - 40);
+                  const end = Math.min(userText.length, amountRe.lastIndex + 40);
+                  const windowText = userText.slice(start, end);
+                  if (keywordRe.test(windowText)) {
+                    if (tryAssign(match[1])) { assigned = true; break; }
+                  }
+                }
+              }
+            }
+          }
+        } catch (e) {
+          console.warn("Parameter inference from meta failed", e);
+        }
+
         const responseTime = Date.now() - startTime;
 
         // Infer likely user query from parameters
