@@ -2341,13 +2341,20 @@
         // Export PDF button
         const exportBtn = $("exportPdfBtn");
         if (exportBtn) {
-          const isHttp = (function () {
-            try { return typeof location !== 'undefined' && /^https?:/i.test(location.protocol); } catch (_) { return false; }
+          const env = (function () {
+            try {
+              const proto = (typeof location !== 'undefined' && location.protocol) || '';
+              const host = (typeof location !== 'undefined' && location.host) || '';
+              const onOwnHost = /mortgage-calculator-open-ai\.onrender\.com/i.test(host) || /localhost:8000/.test(host);
+              return { proto, host, onOwnHost };
+            } catch (_) {
+              return { proto: '', host: '', onOwnHost: false };
+            }
           })();
-          const EXPORT_ENDPOINTS = isHttp
+          const EXPORT_ENDPOINTS = env.onOwnHost
             ? ['/api/export-pdf', 'https://mortgage-calculator-open-ai.onrender.com/api/export-pdf', 'http://localhost:8000/api/export-pdf']
             : ['https://mortgage-calculator-open-ai.onrender.com/api/export-pdf', 'http://localhost:8000/api/export-pdf', '/api/export-pdf'];
-          console.debug('Export PDF endpoints', { isHttp, EXPORT_ENDPOINTS });
+          console.debug('Export PDF endpoints', { env, EXPORT_ENDPOINTS });
 
           const postForBlob = async (url, payload) => {
             return fetch(url, {
