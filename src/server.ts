@@ -908,12 +908,7 @@ function createMortgageCalculatorServer(): Server {
         console.log("[MCP] Returning structuredContent:", structured);
 
         return {
-          content: [
-            {
-              type: "text",
-              text: widget.responseText,
-            },
-          ],
+          content: [],
           structuredContent: structured,
           _meta: metaForReturn,
         };
