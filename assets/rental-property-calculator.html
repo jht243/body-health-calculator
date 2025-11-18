@@ -81,6 +81,58 @@
         line-height: 1.1;
       }
 
+      /* Purchase header toggles aligned to the right of the title (single horizontal line) */
+      details[data-openai-component="purchase-details"] > summary.section-summary {
+        position: relative;
+        padding-right: 420px; /* reserve space for two inline toggles */
+      }
+      .purchase-header-toggles {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        flex-direction: row; /* inline, side-by-side */
+        align-items: center;
+        gap: 16px;
+        white-space: nowrap;
+      }
+      .purchase-header-toggles .row { display: inline-flex; align-items: center; gap: 8px; }
+      .purchase-header-toggles .label { margin: 0; font-size: 10px; white-space: nowrap; color: rgba(148,163,184,0.8); }
+      .purchase-header-toggles .yesno-toggle { transform: scale(0.9); transform-origin: right center; }
+      @media (max-width: 900px) {
+        details[data-openai-component="purchase-details"] > summary.section-summary { padding-right: 320px; }
+        .purchase-header-toggles { gap: 12px; }
+      }
+      @media (max-width: 620px) {
+        details[data-openai-component="purchase-details"] > summary.section-summary { padding-right: 18px; }
+        .purchase-header-toggles { display: none; }
+      }
+
+      /* Sell/Exit header toggle aligned to the right of the title (single line) */
+      details[data-openai-component="sell-exit-assumptions"] > summary.section-summary {
+        position: relative;
+        padding-right: 240px; /* space for toggle */
+      }
+      .sell-header-toggle {
+        position: absolute;
+        right: 18px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        white-space: nowrap;
+      }
+      .sell-header-toggle .yesno-toggle { transform: scale(0.9); transform-origin: right center; }
+      @media (max-width: 820px) {
+        details[data-openai-component="sell-exit-assumptions"] > summary.section-summary { padding-right: 200px; }
+      }
+      @media (max-width: 620px) {
+        details[data-openai-component="sell-exit-assumptions"] > summary.section-summary { padding-right: 18px; }
+        .sell-header-toggle { display: none; }
+      }
+
       .section-summary::after {
         content: "";
         width: 9px;
@@ -183,13 +235,13 @@
       }
 
       .grid.duo-columns {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 16px 18px;
       }
 
       .grid.trio-columns {
-        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-        gap: 16px 18px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px 16px;
       }
 
       /* Inline pair: main amount + small percent input aligned horizontally */
@@ -335,6 +387,7 @@
       .three-col > * { min-width: 0; }
       @media (max-width: 1200px) { .three-col { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
       @media (max-width: 900px) { .three-col { grid-template-columns: 1fr; } }
+      @media (max-width: 720px) { .grid.duo-columns, .grid.trio-columns { grid-template-columns: 1fr; } }
       .metrics-grid { display: grid; gap: 8px; }
       .metric { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 12px; border-radius: 10px; background: rgba(37, 40, 65, 0.45); border: 1px solid rgba(71, 85, 105, 0.35); }
       .metric .label { color: rgba(203, 213, 225, 0.9); font-size: 13px; }
@@ -420,6 +473,17 @@
         text-transform: none;
         letter-spacing: 0;
         font-weight: 400;
+      }
+
+      /* Prevent Purchase Details inputs from stretching too wide in narrow iframe */
+      #purchase_inputs_row #purchase_price,
+      #purchase_inputs_row #closing_cost {
+        max-width: 260px;
+        width: min(260px, 100%);
+      }
+      @media (max-width: 640px) {
+        #purchase_inputs_row #purchase_price,
+        #purchase_inputs_row #closing_cost { max-width: 200px; width: min(200px, 100%); }
       }
 
       .percent-field {
@@ -1493,47 +1557,47 @@
 
   <!-- Rental Property Calculator: New Input Sections -->
   <details class="section-block collapsible" data-openai-component="purchase-details" open>
-    <summary class="section-summary">🏠 Purchase Details</summary>
+    <summary class="section-summary">
+      <span class="summary-title">🏠 Purchase Details</span>
+      <div class="purchase-header-toggles" aria-label="Purchase toggles">
+        <div class="row">
+          <p class="label">Use Loan?</p>
+          <div class="yesno-toggle" role="group" aria-label="Use Loan">
+            <label class="yesno-option">
+              <input type="radio" id="use_loan_yes" name="use_loan" value="yes" />
+              <span>Yes</span>
+            </label>
+            <label class="yesno-option">
+              <input type="radio" id="use_loan_no" name="use_loan" value="no" checked />
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+        <div class="row">
+          <p class="label">Need Repairs?</p>
+          <div class="yesno-toggle" role="group" aria-label="Need Repairs">
+            <label class="yesno-option">
+              <input type="radio" id="need_repairs_yes" name="need_repairs" value="yes" />
+              <span>Yes</span>
+            </label>
+            <label class="yesno-option">
+              <input type="radio" id="need_repairs_no" name="need_repairs" value="no" checked />
+              <span>No</span>
+            </label>
+          </div>
+        </div>
+      </div>
+    </summary>
     <div class="collapsible-content">
       <div class="grid duo-columns" id="purchase_inputs_row">
         <label>
           Purchase Price ($)
           <input type="number" id="purchase_price" min="0" step="1000" />
         </label>
-        <div style="display: flex; gap: 12px; align-items: flex-start;">
-          <label style="flex: 1;">
-            Additional Closing Cost ($)
-            <input type="number" id="closing_cost" min="0" step="100" />
-          </label>
-          <div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 10px; border: 1px solid rgba(255,255,255,0.1); border-radius: 8px; margin-top: -20px;">
-            <div class="field-group-header" style="margin: 0; display: flex; align-items: center; gap: 8px;">
-              <p class="field-group-label" style="margin: 0; font-size: 10px; white-space: nowrap; width: 110px;">Use Loan?</p>
-              <div class="yesno-toggle" role="group" aria-label="Use Loan" style="transform: scale(0.8); transform-origin: left center;">
-                <label class="yesno-option">
-                  <input type="radio" id="use_loan_yes" name="use_loan" value="yes" />
-                  <span>Yes</span>
-                </label>
-                <label class="yesno-option">
-                  <input type="radio" id="use_loan_no" name="use_loan" value="no" checked />
-                  <span>No</span>
-                </label>
-              </div>
-            </div>
-            <div class="field-group-header" style="margin: 0; display: flex; align-items: center; gap: 8px;">
-              <p class="field-group-label" style="margin: 0; font-size: 10px; white-space: nowrap; width: 110px;">Need Repairs?</p>
-              <div class="yesno-toggle" role="group" aria-label="Need Repairs" style="transform: scale(0.8); transform-origin: left center;">
-                <label class="yesno-option">
-                  <input type="radio" id="need_repairs_yes" name="need_repairs" value="yes" />
-                  <span>Yes</span>
-                </label>
-                <label class="yesno-option">
-                  <input type="radio" id="need_repairs_no" name="need_repairs" value="no" checked />
-                  <span>No</span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
+        <label>
+          Additional Closing Cost ($)
+          <input type="number" id="closing_cost" min="0" step="100" />
+        </label>
       </div>
 
       <div class="field-group" id="loan_field_group">
@@ -1688,21 +1752,25 @@
   </details>
 
   <details class="section-block collapsible" data-openai-component="sell-exit-assumptions">
-    <summary class="section-summary">🚪 Sell / Exit Assumptions</summary>
+    <summary class="section-summary">
+      <span class="summary-title">🚪 Sell / Exit Assumptions</span>
+      <div class="sell-header-toggle" aria-label="Price or Appreciation">
+        <div class="yesno-toggle" role="group" aria-label="Price or Appreciation">
+          <label class="yesno-option">
+            <input type="radio" id="price_mode_price" name="price_mode" value="price" />
+            <span>Price</span>
+          </label>
+          <label class="yesno-option">
+            <input type="radio" id="price_mode_appreciation" name="price_mode" value="appreciation" checked />
+            <span>Appreciation</span>
+          </label>
+        </div>
+      </div>
+    </summary>
     <div class="collapsible-content">
-      <div class="grid trio-columns" style="align-items: end; padding-top: 22px;">
-        <!-- Column 1: Price/Appreciation selector with toggle ABOVE the title, not affecting layout height -->
+      <div class="grid trio-columns" style="align-items: end; padding-top: 12px;">
+        <!-- Column 1 -->
         <div style="position: relative; display: flex; flex-direction: column; justify-content: flex-end; margin-top: 0;">
-          <div class="yesno-toggle" role="group" aria-label="Price or Appreciation" style="position: absolute; top: -36px; left: 0; transform: scale(0.85); transform-origin: left bottom;">
-            <label class="yesno-option">
-              <input type="radio" id="price_mode_price" name="price_mode" value="price" />
-              <span>Price</span>
-            </label>
-            <label class="yesno-option">
-              <input type="radio" id="price_mode_appreciation" name="price_mode" value="appreciation" checked />
-              <span>Appreciation</span>
-            </label>
-          </div>
           <label class="sell-price-field" style="margin-top: 0;">
             Sale Price ($)
             <input type="number" id="sell_price" min="0" step="1000" />
