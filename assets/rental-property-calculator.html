@@ -939,6 +939,12 @@
         align-items: center;
         gap: 16px;
       }
+      .header-actions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 4px;
+      }
       .rate-indicator {
         position: absolute;
         top: 4px;
@@ -1030,10 +1036,16 @@
       @media (max-width: 560px) {
         .rate-badge { display: none; }
       }
-      .rate-cta {
+      .rate-cta-stack {
         position: absolute;
         right: 0;
         top: 44px;
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+      }
+      .rate-cta {
         background: linear-gradient(135deg, rgba(14,165,233,0.18), rgba(14,165,233,0.06));
         border: 1px solid rgba(14,165,233,0.28);
         color: rgba(226, 244, 255, 0.9);
@@ -1442,9 +1454,22 @@
     <div class="app">
       <div id="viewsContainer">
         <div class="view-container" id="summaryView">
-            <header>
+
+
+
+            <header class="slide-header">
               <h1>Rental Property Calculator</h1>
               <p>Compare loan programs, see monthly costs, and preview payoff timing.<br />Adjust the inputs to explore scenarios.</p>
+              <div class="rate-cta-stack">
+                <span class="rate-badge" data-openai-component="rate-badge">
+                  <span class="rate-label">TODAY'S AVERAGE RATE</span>
+                  <span class="rate-num">5%</span>
+                </span>
+                <button type="button" class="rate-cta" id="notifyRatesBtn" data-openai-component="rate-indicator">
+                  <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 22a2 2 0 0 0 2-2h-4a2 2 0 0 0 2 2Zm6-6V11a6 6 0 1 0-12 0v5l-2 2v1h16v-1l-2-2Z"/></svg>
+                  <span>Notify me when rates drop</span>
+                </button>
+              </div>
             </header>
 
   <!-- Rental Property Calculator: New Input Sections -->
@@ -2010,12 +2035,16 @@
         <div class="view-container is-hidden" id="amortizationView">
             <header>
               <h2>Breakdown Over Time (Year-by-Year)</h2>
-              <p>Annual rollup of income, expenses, cash flow, returns, and equity.</p>
-              <div class="button-row" id="showAmortizationSummaryBtn">
-                <button type="button" class="cta-button secondary">&larr; Back to Inputs</button>
-              </div>
-              <div class="button-row">
-                <button type="button" class="cta-button secondary" id="backToBreakdownBtn">&larr; Back to Breakdown</button>
+              <div class="header-row">
+                <p>Annual rollup of income, expenses, cash flow, returns, and equity.</p>
+                <div class="header-actions">
+                  <div class="button-row" id="showAmortizationSummaryBtn">
+                    <button type="button" class="cta-button secondary">&larr; Back to Inputs</button>
+                  </div>
+                  <div class="button-row">
+                    <button type="button" class="cta-button secondary" id="backToBreakdownBtn">&larr; Back to Breakdown</button>
+                  </div>
+                </div>
               </div>
             </header>
             <section class="section-block">
