@@ -35,8 +35,8 @@
       .app {
         width: 100%;
         max-width: 100%;
-        margin: 0 auto;
-        padding: 0 var(--app-pad-x) 32px;
+        margin: 0;
+        padding: 0 0 32px 0;
         display: grid;
         gap: 18px;
         background: linear-gradient(135deg, rgba(25, 28, 48, 0.9), rgba(20, 23, 42, 0.95));
@@ -47,6 +47,10 @@
         touch-action: auto;
         overscroll-behavior: auto;
         -webkit-overflow-scrolling: touch;
+      }
+
+      header {
+        padding: 0 var(--app-pad-x);
       }
 
       header h1 {
@@ -206,14 +210,15 @@
         border: 1px solid rgba(71, 85, 105, 0.3);
         background: linear-gradient(135deg, rgba(30, 33, 56, 0.85), rgba(25, 28, 48, 0.9));
         padding: 16px;
+        margin: 0 var(--app-pad-x);
         display: grid;
         gap: 12px;
         box-shadow: 0 4px 12px rgba(10, 13, 28, 0.4);
         touch-action: auto;
         overscroll-behavior: auto;
         -webkit-overflow-scrolling: touch;
-        width: 100%;
-        max-width: 100%;
+        width: calc(100% - 2 * var(--app-pad-x));
+        max-width: calc(100% - 2 * var(--app-pad-x));
         min-width: 0;
       }
 
@@ -1074,7 +1079,7 @@
       .slide-header {
         position: relative;
         margin: 0;
-        padding: 0;
+        padding: 0 var(--app-pad-x);
       }
 
       .slide-header p {
