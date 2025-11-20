@@ -3779,6 +3779,9 @@ if (outputs.term_hint) outputs.term_hint.textContent = `Original term ${normaliz
         // ---------- Persisted user inputs (72h) via Apps SDK widgetState with localStorage fallback ----------
         const PERSIST_KEY = "rpc_user_inputs_state_v2"; // Changed key to invalidate old blank state
         const PERSIST_TTL_MS = 72 * 60 * 60 * 1000;
+        
+        // Clear old v1 localStorage on load
+        try { localStorage.removeItem("rpc_user_inputs_state_v1"); } catch(_) {}
 
         const PERSIST_INPUT_IDS = [
           // Income
@@ -3845,12 +3848,14 @@ if (outputs.term_hint) outputs.term_hint.textContent = `Original term ${normaliz
 
         const hydrateInputsFromState = () => {
           const state = loadUserInputsState();
+          console.log('[DEBUG] loadUserInputsState returned:', state);
           if (!state) return false;
           // Fill inputs
           Object.entries(state.inputs || {}).forEach(([id, val]) => {
             const el = document.getElementById(id);
             if (!el) return;
             el.value = String(val);
+            console.log(`[DEBUG] Hydrated ${id} = ${val}`);
           });
           // If user had values for these fields, treat them as edited to avoid overwriting with derived defaults / API
           if (state.inputs && 'exp_property_tax_annual' in state.inputs) taxEdited = true;
@@ -4668,10 +4673,14 @@ if (outputs.term_hint) outputs.term_hint.textContent = `Original term ${normaliz
 
         // Hydrate from saved widget/local state BEFORE applying derived defaults
         const hadSavedState = !!hydrateInputsFromState();
+        console.log('[DEBUG] hadSavedState:', hadSavedState);
 
         // Apply rental defaults on first load when there is no previously saved state
         if (!hadSavedState) {
+          console.log('[DEBUG] No saved state, applying defaults');
           setRentalDefaultsIfEmpty(true);
+        } else {
+          console.log('[DEBUG] Had saved state, skipping defaults');
         }
 
         // Ensure visibility and computed labels reflect hydrated/defaulted state
