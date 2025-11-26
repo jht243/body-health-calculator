@@ -24797,10 +24797,37 @@ var loadSavedData = () => {
     "My Photo Health Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
   };
 };
-function Calculator() {
+function Calculator({ initialData: initialData2 }) {
   const [calculatorType, setCalculatorType] = (0, import_react3.useState)("BMI Calculator");
   const [isAnalyzing, setIsAnalyzing] = (0, import_react3.useState)(false);
-  const [calculators, setCalculators] = (0, import_react3.useState)(loadSavedData);
+  const [calculators, setCalculators] = (0, import_react3.useState)(() => {
+    const loaded = loadSavedData();
+    if (initialData2 && (initialData2.height_cm || initialData2.weight_kg)) {
+      const current = loaded["BMI Calculator"];
+      loaded["BMI Calculator"] = {
+        ...current,
+        values: {
+          ...current.values,
+          heightCm: initialData2.height_cm ? String(initialData2.height_cm) : current.values.heightCm,
+          weightKg: initialData2.weight_kg ? String(initialData2.weight_kg) : current.values.weightKg,
+          age: initialData2.age_years ? String(initialData2.age_years) : current.values.age,
+          gender: initialData2.gender === "female" ? "female" : "male",
+          activityLevel: initialData2.activity_level || "moderate"
+        },
+        // Mark these as touched so they aren't overwritten by syncing logic
+        touched: {
+          height: true,
+          weight: true,
+          age: true,
+          gender: true,
+          activity: true
+        },
+        // Pre-populate result if summary exists
+        result: initialData2.summary || current.result
+      };
+    }
+    return loaded;
+  });
   const [showSubscribeModal, setShowSubscribeModal] = (0, import_react3.useState)(false);
   const [email, setEmail] = (0, import_react3.useState)("");
   const [turnstileToken, setTurnstileToken] = (0, import_react3.useState)(null);
@@ -26598,14 +26625,39 @@ var ErrorBoundary = class extends import_react4.default.Component {
     return this.props.children;
   }
 };
+var getHydrationData = () => {
+  if (typeof window === "undefined") return {};
+  const oa = window.openai;
+  if (!oa) return {};
+  const candidates = [
+    oa.toolOutput,
+    oa.structuredContent,
+    oa.result?.structuredContent,
+    oa.toolInput
+  ];
+  for (const candidate of candidates) {
+    if (candidate && typeof candidate === "object" && Object.keys(candidate).length > 0) {
+      console.log("[Hydration] Found data:", candidate);
+      return candidate;
+    }
+  }
+  return {};
+};
 var container = document.getElementById("bmi-health-calculator-root");
 if (!container) {
   throw new Error("bmi-health-calculator-root element not found");
 }
+var initialData = getHydrationData();
 var root = (0, import_client.createRoot)(container);
 root.render(
-  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react4.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Calculator, {}) }) })
+  /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(import_react4.default.StrictMode, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(ErrorBoundary, { children: /* @__PURE__ */ (0, import_jsx_runtime2.jsx)(Calculator, { initialData }) }) })
 );
+window.addEventListener("openai:set_globals", (ev) => {
+  const globals = ev?.detail?.globals;
+  if (globals) {
+    console.log("[Hydration] Late event received:", globals);
+  }
+});
 /*! Bundled license information:
 
 react/cjs/react.development.js:

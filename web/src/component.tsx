@@ -229,11 +229,39 @@ const loadSavedData = (): Record<CalculatorType, CalculatorData> => {
   };
 };
 
-export default function Calculator() {
+export default function Calculator({ initialData }: { initialData?: any }) {
   const [calculatorType, setCalculatorType] = useState<CalculatorType>("BMI Calculator");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   
-  const [calculators, setCalculators] = useState<Record<CalculatorType, CalculatorData>>(loadSavedData);
+  const [calculators, setCalculators] = useState<Record<CalculatorType, CalculatorData>>(() => {
+    const loaded = loadSavedData();
+    // If initialData provides inputs, override the defaults for BMI calculator
+    if (initialData && (initialData.height_cm || initialData.weight_kg)) {
+       const current = loaded["BMI Calculator"];
+       loaded["BMI Calculator"] = {
+         ...current,
+         values: {
+           ...current.values,
+           heightCm: initialData.height_cm ? String(initialData.height_cm) : current.values.heightCm,
+           weightKg: initialData.weight_kg ? String(initialData.weight_kg) : current.values.weightKg,
+           age: initialData.age_years ? String(initialData.age_years) : current.values.age,
+           gender: initialData.gender === "female" ? "female" : "male",
+           activityLevel: initialData.activity_level || "moderate"
+         },
+         // Mark these as touched so they aren't overwritten by syncing logic
+         touched: {
+           height: true,
+           weight: true,
+           age: true,
+           gender: true,
+           activity: true
+         },
+         // Pre-populate result if summary exists
+         result: initialData.summary || current.result
+       };
+    }
+    return loaded;
+  });
 
   // Subscription State
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
