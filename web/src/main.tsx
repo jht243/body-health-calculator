@@ -63,11 +63,21 @@ interface OpenAIGlobals {
 
 // Hydration Helper
 const getHydrationData = (): any => {
+  console.log("[Hydration] Starting hydration check...");
+  
   // Check for window.openai
-  if (typeof window === 'undefined') return {};
+  if (typeof window === 'undefined') {
+    console.log("[Hydration] Window is undefined");
+    return {};
+  }
   
   const oa = (window as any).openai as OpenAIGlobals;
-  if (!oa) return {};
+  if (!oa) {
+    console.log("[Hydration] window.openai not found, rendering with defaults");
+    return {};
+  }
+
+  console.log("[Hydration] window.openai found:", Object.keys(oa));
 
   // Prioritize sources as per reference implementation
   const candidates = [
@@ -84,8 +94,11 @@ const getHydrationData = (): any => {
     }
   }
   
+  console.log("[Hydration] No data found in any candidate source");
   return {};
 };
+
+console.log("[Main] BMI Health Calculator main.tsx loading...");
 
 const container = document.getElementById("bmi-health-calculator-root");
 

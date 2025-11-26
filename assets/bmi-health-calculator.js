@@ -24798,11 +24798,15 @@ var loadSavedData = () => {
   };
 };
 function Calculator({ initialData: initialData2 }) {
+  console.log("[BMI Calculator] Component mounting with initialData:", initialData2);
   const [calculatorType, setCalculatorType] = (0, import_react3.useState)("BMI Calculator");
   const [isAnalyzing, setIsAnalyzing] = (0, import_react3.useState)(false);
   const [calculators, setCalculators] = (0, import_react3.useState)(() => {
+    console.log("[BMI Calculator] Initializing state...");
     const loaded = loadSavedData();
-    if (initialData2 && (initialData2.height_cm || initialData2.weight_kg)) {
+    console.log("[BMI Calculator] Loaded saved data:", loaded);
+    if (initialData2 && (initialData2.height_cm || initialData2.weight_kg || initialData2.summary)) {
+      console.log("[BMI Calculator] Applying initialData to BMI Calculator");
       const current = loaded["BMI Calculator"];
       loaded["BMI Calculator"] = {
         ...current,
@@ -24825,6 +24829,8 @@ function Calculator({ initialData: initialData2 }) {
         // Pre-populate result if summary exists
         result: initialData2.summary || current.result
       };
+    } else {
+      console.log("[BMI Calculator] No initialData to apply, using defaults");
     }
     return loaded;
   });
@@ -25980,6 +25986,8 @@ function Calculator({ initialData: initialData2 }) {
       transition: "background-color 0.2s"
     }
   };
+  console.log("[BMI Calculator] Rendering component. Calculator type:", calculatorType);
+  console.log("[BMI Calculator] Current calculator data:", currentCalc);
   return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.container, children: [
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.headerRow, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.title, children: calculatorType }),
@@ -26626,9 +26634,17 @@ var ErrorBoundary = class extends import_react4.default.Component {
   }
 };
 var getHydrationData = () => {
-  if (typeof window === "undefined") return {};
+  console.log("[Hydration] Starting hydration check...");
+  if (typeof window === "undefined") {
+    console.log("[Hydration] Window is undefined");
+    return {};
+  }
   const oa = window.openai;
-  if (!oa) return {};
+  if (!oa) {
+    console.log("[Hydration] window.openai not found, rendering with defaults");
+    return {};
+  }
+  console.log("[Hydration] window.openai found:", Object.keys(oa));
   const candidates = [
     oa.toolOutput,
     oa.structuredContent,
@@ -26641,8 +26657,10 @@ var getHydrationData = () => {
       return candidate;
     }
   }
+  console.log("[Hydration] No data found in any candidate source");
   return {};
 };
+console.log("[Main] BMI Health Calculator main.tsx loading...");
 var container = document.getElementById("bmi-health-calculator-root");
 if (!container) {
   throw new Error("bmi-health-calculator-root element not found");

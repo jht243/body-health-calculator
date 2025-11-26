@@ -230,13 +230,19 @@ const loadSavedData = (): Record<CalculatorType, CalculatorData> => {
 };
 
 export default function Calculator({ initialData }: { initialData?: any }) {
+  console.log("[BMI Calculator] Component mounting with initialData:", initialData);
+  
   const [calculatorType, setCalculatorType] = useState<CalculatorType>("BMI Calculator");
   const [isAnalyzing, setIsAnalyzing] = useState(false);
   
   const [calculators, setCalculators] = useState<Record<CalculatorType, CalculatorData>>(() => {
+    console.log("[BMI Calculator] Initializing state...");
     const loaded = loadSavedData();
+    console.log("[BMI Calculator] Loaded saved data:", loaded);
+    
     // If initialData provides inputs, override the defaults for BMI calculator
-    if (initialData && (initialData.height_cm || initialData.weight_kg)) {
+    if (initialData && (initialData.height_cm || initialData.weight_kg || initialData.summary)) {
+       console.log("[BMI Calculator] Applying initialData to BMI Calculator");
        const current = loaded["BMI Calculator"];
        loaded["BMI Calculator"] = {
          ...current,
@@ -259,6 +265,8 @@ export default function Calculator({ initialData }: { initialData?: any }) {
          // Pre-populate result if summary exists
          result: initialData.summary || current.result
        };
+    } else {
+      console.log("[BMI Calculator] No initialData to apply, using defaults");
     }
     return loaded;
   });
@@ -1521,6 +1529,9 @@ export default function Calculator({ initialData }: { initialData?: any }) {
       transition: "background-color 0.2s"
     }
   };
+
+  console.log("[BMI Calculator] Rendering component. Calculator type:", calculatorType);
+  console.log("[BMI Calculator] Current calculator data:", currentCalc);
 
   return (
     <div style={styles.container}>
