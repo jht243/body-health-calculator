@@ -296,7 +296,7 @@ function widgetMeta(widget: BmiHealthWidget, bustCache: boolean = false) {
   return {
     "openai/outputTemplate": templateUri,
     "openai/widgetDescription":
-      "A comprehensive health calculator for BMI, Ideal Weight, Body Fat Percentage, and Calorie Needs. Opens immediately and works with or without user inputs.",
+      "A comprehensive health calculator for BMI, Ideal Weight, Body Fat Percentage, and Calorie Needs.",
     "openai/componentDescriptions": {
       "metrics-form": "Input form for height, weight, age, gender, and other body measurements.",
       "bmi-card": "Card displaying the calculated Body Mass Index and health category.",
@@ -316,7 +316,6 @@ function widgetMeta(widget: BmiHealthWidget, bustCache: boolean = false) {
       "diet"
     ],
     "openai/sampleConversations": [
-      { "user": "Calculate my BMI", "assistant": "Here is the BMI Health Calculator. You can enter your measurements when ready, or I can help calculate if you provide them." },
       { "user": "Calculate my BMI, I am 180cm and 75kg.", "assistant": "I can help with that. Here is your BMI calculation." },
       { "user": "What is my ideal weight if I'm 5'6\" female?", "assistant": "I've estimated your ideal weight range based on your height and gender." },
       { "user": "Estimate body fat for 30yo male, waist 90cm, neck 38cm, height 178cm.", "assistant": "Using the US Navy method, here is your estimated body fat percentage." },
@@ -359,7 +358,7 @@ const widgets: BmiHealthWidget[] = [
     invoking:
       "Opening the BMI Health Calculator...",
     invoked:
-      "Here is the BMI Health Calculator. Enter your measurements to calculate your health metrics.",
+      "Here is the BMI Health Calculator. You can enter your height and weight.",
     html: readWidgetHtml("bmi-health-calculator"),
   },
 ];
@@ -407,7 +406,7 @@ const toolInputParser = z.object({
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description:
-    "Use this for BMI, Ideal Weight, and Body Fat analysis. Opens immediately and calculates health metrics when provided with height, weight, and other inputs. Works with partial or no inputs - the calculator will open regardless.",
+    "Use this for BMI, Ideal Weight, and Body Fat analysis. It calculates health metrics based on height, weight, and other inputs.",
   inputSchema: toolInputSchema,
   outputSchema: {
     type: "object",
