@@ -289,7 +289,9 @@ export default function Calculator({ initialData }: { initialData?: any }) {
              activity: true
            },
            // Pre-populate result if summary exists
-           result: initialData.summary || current.result
+           result: (initialData.summary && typeof initialData.summary.bmi === 'number') 
+             ? initialData.summary.bmi 
+             : current.result
          };
        } catch (e) {
          console.error("[BMI Calculator] Failed to apply initialData:", e);

@@ -24848,7 +24848,7 @@ function Calculator({ initialData: initialData2 }) {
             activity: true
           },
           // Pre-populate result if summary exists
-          result: initialData2.summary || current.result
+          result: initialData2.summary && typeof initialData2.summary.bmi === "number" ? initialData2.summary.bmi : current.result
         };
       } catch (e) {
         console.error("[BMI Calculator] Failed to apply initialData:", e);
