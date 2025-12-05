@@ -12,7 +12,11 @@ import {
   Loader,
   ShoppingCart,
   Mail,
-  MessageSquare
+  MessageSquare,
+  TrendingUp,
+  Target,
+  Check,
+  X
 } from "lucide-react";
 
 const COLORS = {
@@ -305,8 +309,8 @@ export default function Calculator({ initialData }: { initialData?: any }) {
 
   // Subscription State
   const [showSubscribeModal, setShowSubscribeModal] = useState(false);
+  const [showSubscribeBanner, setShowSubscribeBanner] = useState(true);
   const [email, setEmail] = useState("");
-  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [subscribeStatus, setSubscribeStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [subscribeMessage, setSubscribeMessage] = useState("");
 
@@ -318,35 +322,9 @@ export default function Calculator({ initialData }: { initialData?: any }) {
   const [feedbackText, setFeedbackText] = useState("");
   const [feedbackStatus, setFeedbackStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
-  useEffect(() => {
-    console.log("[BMI Calculator] Turnstile Effect triggered. Show:", showSubscribeModal);
-    if (showSubscribeModal && (window as any).turnstile) {
-      console.log("[BMI Calculator] Rendering Turnstile...");
-      setTimeout(() => {
-          try {
-            (window as any).turnstile.render('#turnstile-widget', {
-              sitekey: (window as any).TURNSTILE_SITE_KEY,
-              callback: function(token: string) {
-                console.log("[BMI Calculator] Turnstile success");
-                setTurnstileToken(token);
-              },
-            });
-          } catch (e) {
-            console.error("[BMI Calculator] Turnstile render error:", e);
-            // Turnstile might already be rendered
-          }
-      }, 100);
-    }
-  }, [showSubscribeModal]);
-
   const handleSubscribe = async () => {
     if (!email || !email.includes("@")) {
         setSubscribeMessage("Please enter a valid email.");
-        setSubscribeStatus("error");
-        return;
-    }
-    if (!turnstileToken) {
-        setSubscribeMessage("Please complete the security check.");
         setSubscribeStatus("error");
         return;
     }
@@ -354,14 +332,13 @@ export default function Calculator({ initialData }: { initialData?: any }) {
     setSubscribeStatus("loading");
     try {
         // In a real app, the base URL might need to be dynamic if not served from root
-        const response = await fetch("/subscribe", {
+        const response = await fetch("/api/subscribe", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
                 email,
                 settlementId: "health-news",
-                settlementName: "Health Calculator News",
-                turnstileToken
+                settlementName: "Health Calculator News"
             })
         });
         
@@ -374,7 +351,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
                 setEmail("");
                 setSubscribeStatus("idle");
                 setSubscribeMessage("");
-                setTurnstileToken(null);
             }, 3000);
         } else {
             setSubscribeStatus("error");
@@ -1058,6 +1034,47 @@ export default function Calculator({ initialData }: { initialData?: any }) {
       marginBottom: "10px",
       textAlign: "left" as const
     },
+    subscribeBanner: {
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "space-between",
+        backgroundColor: "#E6F7F0",
+        borderRadius: "12px",
+        padding: "12px 16px",
+        marginBottom: "24px",
+        position: "relative" as const
+    },
+    subscribeText: {
+        fontSize: "14px",
+        fontWeight: 600,
+        color: "#065F46", // Dark green to match image
+        flex: 1
+    },
+    subscribeBtn: {
+        display: "flex",
+        alignItems: "center",
+        gap: "8px",
+        backgroundColor: "#56C596",
+        color: "white",
+        border: "none",
+        borderRadius: "20px",
+        padding: "8px 20px",
+        fontSize: "14px",
+        fontWeight: 600,
+        cursor: "pointer",
+        transition: "background-color 0.2s",
+        boxShadow: "0 2px 4px rgba(86, 197, 150, 0.2)"
+    },
+    closeBtn: {
+        background: "none",
+        border: "none",
+        cursor: "pointer",
+        padding: "4px",
+        marginLeft: "12px",
+        color: COLORS.textSecondary,
+        display: "flex",
+        alignItems: "center"
+    },
     subheader: {
       fontSize: "14px",
       color: COLORS.textSecondary,
@@ -1544,27 +1561,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
       marginBottom: "16px",
       boxSizing: "border-box" as const,
       outline: "none"
-    },
-    headerRow: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "10px"
-    },
-    subscribeBtn: {
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      padding: "8px 12px",
-      backgroundColor: COLORS.inputBg,
-      color: COLORS.primary,
-      borderRadius: "8px",
-      border: "none",
-      fontSize: "12px",
-      fontWeight: 600,
-      cursor: "pointer",
-      textDecoration: "none",
-      transition: "background-color 0.2s"
     }
   };
 
@@ -1573,20 +1569,32 @@ export default function Calculator({ initialData }: { initialData?: any }) {
 
   return (
     <div style={styles.container}>
-      <div style={styles.headerRow}>
-        <div style={styles.title}>{calculatorType}</div>
-        <button style={styles.subscribeBtn} className="btn-press" onClick={() => setShowSubscribeModal(true)}>
-          <Mail size={14} />
-          Subscribe To Health News
-        </button>
+      <div style={{marginBottom: "4px"}}>
+        <div style={styles.title}>Dr. Henry's Body Health Analyzer</div>
       </div>
-      <div style={styles.subheader}>
-        {isBMI ? "Use this calculator to determine your Body Mass Index." : 
-         isIdeal ? "Use this calculator to compute ideal body weight ranges." :
-         isBF ? "Use this calculator to estimate your body fat percentage." :
-         isPhoto ? "Upload photos to get an AI-powered health assessment." :
-         "Use this calculator to estimate daily calorie needs."}
+      <div style={{display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", color: COLORS.textSecondary, fontSize: "14px"}}>
+        <Check size={16} style={{color: COLORS.primary}} />
+        <span>Uses NIH body composition guidelines</span>
       </div>
+      
+      {showSubscribeBanner && (
+        <div style={styles.subscribeBanner}>
+          <span style={styles.subscribeText}>Want expert tips to reach your health goals faster?</span>
+          <button 
+            style={styles.subscribeBtn}
+            onClick={() => setShowSubscribeModal(true)}
+          >
+            <Mail size={16} />
+            Subscribe
+          </button>
+          <button 
+            style={styles.closeBtn}
+            onClick={() => setShowSubscribeBanner(false)}
+          >
+            <X size={18} />
+          </button>
+        </div>
+      )}
 
       <div style={styles.dropdownWrapper}>
         <select 
@@ -2117,9 +2125,134 @@ export default function Calculator({ initialData }: { initialData?: any }) {
         </>
       )}
       
+      {/* Related Calculators Section */}
+      <div style={{
+          backgroundColor: COLORS.card,
+          borderRadius: "16px",
+          padding: "16px",
+          boxShadow: "0 4px 12px -4px rgba(0,0,0,0.05)",
+          marginBottom: "20px"
+      }}>
+          <div style={{
+              fontSize: "14px", 
+              fontWeight: 600, 
+              color: COLORS.textSecondary,
+              marginBottom: "12px",
+              textAlign: "center"
+          }}>
+              Related Calculators
+          </div>
+          <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: "8px",
+              width: "100%"
+          }}>
+              {/* First row - 2 buttons */}
+              <div style={{ display: "flex", gap: "8px" }}>
+                  <button 
+                    className="related-btn"
+                    style={{
+                        flex: 1,
+                        padding: "12px 10px",
+                        backgroundColor: COLORS.inputBg,
+                        border: `1px solid ${COLORS.border}`,
+                        borderRadius: "10px",
+                        color: COLORS.primary,
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px"
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.accentLight;
+                        e.currentTarget.style.borderColor = COLORS.primary;
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.inputBg;
+                        e.currentTarget.style.borderColor = COLORS.border;
+                    }}
+                  >
+                      <TrendingUp size={16} />
+                      Retirement Calculator
+                  </button>
+                  <button 
+                    className="related-btn"
+                    style={{
+                        flex: 1,
+                        padding: "12px 10px",
+                        backgroundColor: COLORS.inputBg,
+                        border: `1px solid ${COLORS.border}`,
+                        borderRadius: "10px",
+                        color: COLORS.primary,
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px"
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.accentLight;
+                        e.currentTarget.style.borderColor = COLORS.primary;
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.inputBg;
+                        e.currentTarget.style.borderColor = COLORS.border;
+                    }}
+                  >
+                      <Target size={16} />
+                      Mortgage Calculator
+                  </button>
+              </div>
+              {/* Second row - 1 button centered */}
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                  <button 
+                    className="related-btn"
+                    style={{
+                        flex: "0 1 50%",
+                        padding: "12px 10px",
+                        backgroundColor: COLORS.inputBg,
+                        border: `1px solid ${COLORS.border}`,
+                        borderRadius: "10px",
+                        color: COLORS.primary,
+                        fontWeight: 600,
+                        fontSize: "14px",
+                        cursor: "pointer",
+                        transition: "all 0.2s",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        gap: "6px"
+                    }}
+                    onMouseEnter={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.accentLight;
+                        e.currentTarget.style.borderColor = COLORS.primary;
+                    }}
+                    onMouseLeave={(e) => {
+                        e.currentTarget.style.backgroundColor = COLORS.inputBg;
+                        e.currentTarget.style.borderColor = COLORS.border;
+                    }}
+                  >
+                      <Check size={16} />
+                      Portfolio Analyzer
+                  </button>
+              </div>
+          </div>
+      </div>
+
       <div style={styles.footer} className="no-print">
+        <button style={styles.footerBtn} onClick={() => setShowSubscribeModal(true)} className="btn-press">
+          <Mail size={16} /> Subscribe
+        </button>
         <button style={styles.footerBtn} onClick={clearInputs} className="btn-press">
-          <RotateCcw size={16} /> Reset Defaults
+          <RotateCcw size={16} /> Reset
         </button>
         <button style={styles.footerBtn} className="btn-press">
           <Heart size={16} /> Donate
@@ -2136,7 +2269,7 @@ export default function Calculator({ initialData }: { initialData?: any }) {
         <div style={styles.modalOverlay} onClick={() => setShowFeedbackModal(false)}>
           <div style={styles.modalContent} onClick={e => e.stopPropagation()}>
             <button style={styles.modalClose} onClick={() => setShowFeedbackModal(false)}>
-              <Minus size={24} style={{transform: "rotate(45deg)"}} />
+              <X size={24} />
             </button>
             
             <div style={{fontSize: "24px", fontWeight: 800, marginBottom: "8px", color: COLORS.textMain}}>
@@ -2181,7 +2314,7 @@ export default function Calculator({ initialData }: { initialData?: any }) {
         <div style={styles.modalOverlay} onClick={() => setShowSubscribeModal(false)}>
           <div style={styles.modalContent} onClick={e => e.stopPropagation()}>
             <button style={styles.modalClose} onClick={() => setShowSubscribeModal(false)}>
-              <Minus size={24} style={{transform: "rotate(45deg)"}} />
+              <X size={24} />
             </button>
             
             <div style={{fontSize: "24px", fontWeight: 800, marginBottom: "8px", color: COLORS.textMain}}>
@@ -2206,10 +2339,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                         />
-                    </div>
-
-                    <div style={{marginBottom: "20px", minHeight: "120px", display: "flex", justifyContent: "center"}}>
-                        <div id="turnstile-widget"></div>
                     </div>
 
                     {subscribeStatus === "error" && (

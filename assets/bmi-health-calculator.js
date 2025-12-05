@@ -24536,12 +24536,16 @@ var __iconNode = [
 ];
 var Camera = createLucideIcon("camera", __iconNode);
 
+// node_modules/lucide-react/dist/esm/icons/check.js
+var __iconNode2 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+var Check = createLucideIcon("check", __iconNode2);
+
 // node_modules/lucide-react/dist/esm/icons/chevron-down.js
-var __iconNode2 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-var ChevronDown = createLucideIcon("chevron-down", __iconNode2);
+var __iconNode3 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+var ChevronDown = createLucideIcon("chevron-down", __iconNode3);
 
 // node_modules/lucide-react/dist/esm/icons/heart.js
-var __iconNode3 = [
+var __iconNode4 = [
   [
     "path",
     {
@@ -24550,10 +24554,10 @@ var __iconNode3 = [
     }
   ]
 ];
-var Heart = createLucideIcon("heart", __iconNode3);
+var Heart = createLucideIcon("heart", __iconNode4);
 
 // node_modules/lucide-react/dist/esm/icons/loader.js
-var __iconNode4 = [
+var __iconNode5 = [
   ["path", { d: "M12 2v4", key: "3427ic" }],
   ["path", { d: "m16.2 7.8 2.9-2.9", key: "r700ao" }],
   ["path", { d: "M18 12h4", key: "wj9ykh" }],
@@ -24563,17 +24567,17 @@ var __iconNode4 = [
   ["path", { d: "M2 12h4", key: "j09sii" }],
   ["path", { d: "m4.9 4.9 2.9 2.9", key: "giyufr" }]
 ];
-var Loader = createLucideIcon("loader", __iconNode4);
+var Loader = createLucideIcon("loader", __iconNode5);
 
 // node_modules/lucide-react/dist/esm/icons/mail.js
-var __iconNode5 = [
+var __iconNode6 = [
   ["path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7", key: "132q7q" }],
   ["rect", { x: "2", y: "4", width: "20", height: "16", rx: "2", key: "izxlao" }]
 ];
-var Mail = createLucideIcon("mail", __iconNode5);
+var Mail = createLucideIcon("mail", __iconNode6);
 
 // node_modules/lucide-react/dist/esm/icons/message-square.js
-var __iconNode6 = [
+var __iconNode7 = [
   [
     "path",
     {
@@ -24582,14 +24586,14 @@ var __iconNode6 = [
     }
   ]
 ];
-var MessageSquare = createLucideIcon("message-square", __iconNode6);
+var MessageSquare = createLucideIcon("message-square", __iconNode7);
 
 // node_modules/lucide-react/dist/esm/icons/minus.js
-var __iconNode7 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
-var Minus = createLucideIcon("minus", __iconNode7);
+var __iconNode8 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
+var Minus = createLucideIcon("minus", __iconNode8);
 
 // node_modules/lucide-react/dist/esm/icons/play.js
-var __iconNode8 = [
+var __iconNode9 = [
   [
     "path",
     {
@@ -24598,17 +24602,17 @@ var __iconNode8 = [
     }
   ]
 ];
-var Play = createLucideIcon("play", __iconNode8);
+var Play = createLucideIcon("play", __iconNode9);
 
 // node_modules/lucide-react/dist/esm/icons/plus.js
-var __iconNode9 = [
+var __iconNode10 = [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
   ["path", { d: "M12 5v14", key: "s699le" }]
 ];
-var Plus = createLucideIcon("plus", __iconNode9);
+var Plus = createLucideIcon("plus", __iconNode10);
 
 // node_modules/lucide-react/dist/esm/icons/printer.js
-var __iconNode10 = [
+var __iconNode11 = [
   [
     "path",
     {
@@ -24619,17 +24623,17 @@ var __iconNode10 = [
   ["path", { d: "M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6", key: "1itne7" }],
   ["rect", { x: "6", y: "14", width: "12", height: "8", rx: "1", key: "1ue0tg" }]
 ];
-var Printer = createLucideIcon("printer", __iconNode10);
+var Printer = createLucideIcon("printer", __iconNode11);
 
 // node_modules/lucide-react/dist/esm/icons/rotate-ccw.js
-var __iconNode11 = [
+var __iconNode12 = [
   ["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "1357e3" }],
   ["path", { d: "M3 3v5h5", key: "1xhq8a" }]
 ];
-var RotateCcw = createLucideIcon("rotate-ccw", __iconNode11);
+var RotateCcw = createLucideIcon("rotate-ccw", __iconNode12);
 
 // node_modules/lucide-react/dist/esm/icons/shopping-cart.js
-var __iconNode12 = [
+var __iconNode13 = [
   ["circle", { cx: "8", cy: "21", r: "1", key: "jimo8o" }],
   ["circle", { cx: "19", cy: "21", r: "1", key: "13723u" }],
   [
@@ -24640,7 +24644,29 @@ var __iconNode12 = [
     }
   ]
 ];
-var ShoppingCart = createLucideIcon("shopping-cart", __iconNode12);
+var ShoppingCart = createLucideIcon("shopping-cart", __iconNode13);
+
+// node_modules/lucide-react/dist/esm/icons/target.js
+var __iconNode14 = [
+  ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
+  ["circle", { cx: "12", cy: "12", r: "6", key: "1vlfrh" }],
+  ["circle", { cx: "12", cy: "12", r: "2", key: "1c9p78" }]
+];
+var Target = createLucideIcon("target", __iconNode14);
+
+// node_modules/lucide-react/dist/esm/icons/trending-up.js
+var __iconNode15 = [
+  ["path", { d: "M16 7h6v6", key: "box55l" }],
+  ["path", { d: "m22 7-8.5 8.5-5-5L2 17", key: "1t1m79" }]
+];
+var TrendingUp = createLucideIcon("trending-up", __iconNode15);
+
+// node_modules/lucide-react/dist/esm/icons/x.js
+var __iconNode16 = [
+  ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
+  ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
+];
+var X = createLucideIcon("x", __iconNode16);
 
 // src/component.tsx
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
@@ -24859,54 +24885,29 @@ function Calculator({ initialData: initialData2 }) {
     return loaded;
   });
   const [showSubscribeModal, setShowSubscribeModal] = (0, import_react3.useState)(false);
+  const [showSubscribeBanner, setShowSubscribeBanner] = (0, import_react3.useState)(true);
   const [email, setEmail] = (0, import_react3.useState)("");
-  const [turnstileToken, setTurnstileToken] = (0, import_react3.useState)(null);
   const [subscribeStatus, setSubscribeStatus] = (0, import_react3.useState)("idle");
   const [subscribeMessage, setSubscribeMessage] = (0, import_react3.useState)("");
   console.log("[BMI Calculator] Render. Type:", calculatorType, "ShowModal:", showSubscribeModal);
   const [showFeedbackModal, setShowFeedbackModal] = (0, import_react3.useState)(false);
   const [feedbackText, setFeedbackText] = (0, import_react3.useState)("");
   const [feedbackStatus, setFeedbackStatus] = (0, import_react3.useState)("idle");
-  (0, import_react3.useEffect)(() => {
-    console.log("[BMI Calculator] Turnstile Effect triggered. Show:", showSubscribeModal);
-    if (showSubscribeModal && window.turnstile) {
-      console.log("[BMI Calculator] Rendering Turnstile...");
-      setTimeout(() => {
-        try {
-          window.turnstile.render("#turnstile-widget", {
-            sitekey: window.TURNSTILE_SITE_KEY,
-            callback: function(token) {
-              console.log("[BMI Calculator] Turnstile success");
-              setTurnstileToken(token);
-            }
-          });
-        } catch (e) {
-          console.error("[BMI Calculator] Turnstile render error:", e);
-        }
-      }, 100);
-    }
-  }, [showSubscribeModal]);
   const handleSubscribe = async () => {
     if (!email || !email.includes("@")) {
       setSubscribeMessage("Please enter a valid email.");
       setSubscribeStatus("error");
       return;
     }
-    if (!turnstileToken) {
-      setSubscribeMessage("Please complete the security check.");
-      setSubscribeStatus("error");
-      return;
-    }
     setSubscribeStatus("loading");
     try {
-      const response = await fetch("/subscribe", {
+      const response = await fetch("/api/subscribe", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           email,
           settlementId: "health-news",
-          settlementName: "Health Calculator News",
-          turnstileToken
+          settlementName: "Health Calculator News"
         })
       });
       const data = await response.json();
@@ -24918,7 +24919,6 @@ function Calculator({ initialData: initialData2 }) {
           setEmail("");
           setSubscribeStatus("idle");
           setSubscribeMessage("");
-          setTurnstileToken(null);
         }, 3e3);
       } else {
         setSubscribeStatus("error");
@@ -25493,6 +25493,48 @@ function Calculator({ initialData: initialData2 }) {
       marginBottom: "10px",
       textAlign: "left"
     },
+    subscribeBanner: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      backgroundColor: "#E6F7F0",
+      borderRadius: "12px",
+      padding: "12px 16px",
+      marginBottom: "24px",
+      position: "relative"
+    },
+    subscribeText: {
+      fontSize: "14px",
+      fontWeight: 600,
+      color: "#065F46",
+      // Dark green to match image
+      flex: 1
+    },
+    subscribeBtn: {
+      display: "flex",
+      alignItems: "center",
+      gap: "8px",
+      backgroundColor: "#56C596",
+      color: "white",
+      border: "none",
+      borderRadius: "20px",
+      padding: "8px 20px",
+      fontSize: "14px",
+      fontWeight: 600,
+      cursor: "pointer",
+      transition: "background-color 0.2s",
+      boxShadow: "0 2px 4px rgba(86, 197, 150, 0.2)"
+    },
+    closeBtn: {
+      background: "none",
+      border: "none",
+      cursor: "pointer",
+      padding: "4px",
+      marginLeft: "12px",
+      color: COLORS.textSecondary,
+      display: "flex",
+      alignItems: "center"
+    },
     subheader: {
       fontSize: "14px",
       color: COLORS.textSecondary,
@@ -25991,40 +26033,38 @@ function Calculator({ initialData: initialData2 }) {
       marginBottom: "16px",
       boxSizing: "border-box",
       outline: "none"
-    },
-    headerRow: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "10px"
-    },
-    subscribeBtn: {
-      display: "flex",
-      alignItems: "center",
-      gap: "6px",
-      padding: "8px 12px",
-      backgroundColor: COLORS.inputBg,
-      color: COLORS.primary,
-      borderRadius: "8px",
-      border: "none",
-      fontSize: "12px",
-      fontWeight: 600,
-      cursor: "pointer",
-      textDecoration: "none",
-      transition: "background-color 0.2s"
     }
   };
   console.log("[BMI Calculator] Rendering component. Calculator type:", calculatorType);
   console.log("[BMI Calculator] Current calculator data:", currentCalc);
   return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.container, children: [
-    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.headerRow, children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.title, children: calculatorType }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { style: styles.subscribeBtn, className: "btn-press", onClick: () => setShowSubscribeModal(true), children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { size: 14 }),
-        "Subscribe To Health News"
-      ] })
+    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginBottom: "4px" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.title, children: "Dr. Henry's Body Health Analyzer" }) }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", alignItems: "center", gap: "8px", marginBottom: "16px", color: COLORS.textSecondary, fontSize: "14px" }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { size: 16, style: { color: COLORS.primary } }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Uses NIH body composition guidelines" })
     ] }),
-    /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.subheader, children: isBMI ? "Use this calculator to determine your Body Mass Index." : isIdeal ? "Use this calculator to compute ideal body weight ranges." : isBF ? "Use this calculator to estimate your body fat percentage." : isPhoto ? "Upload photos to get an AI-powered health assessment." : "Use this calculator to estimate daily calorie needs." }),
+    showSubscribeBanner && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.subscribeBanner, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: styles.subscribeText, children: "Want expert tips to reach your health goals faster?" }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+        "button",
+        {
+          style: styles.subscribeBtn,
+          onClick: () => setShowSubscribeModal(true),
+          children: [
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { size: 16 }),
+            "Subscribe"
+          ]
+        }
+      ),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
+        "button",
+        {
+          style: styles.closeBtn,
+          onClick: () => setShowSubscribeBanner(false),
+          children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { size: 18 })
+        }
+      )
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.dropdownWrapper, children: [
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
         "select",
@@ -26510,10 +26550,140 @@ function Calculator({ initialData: initialData2 }) {
         ] }, product.id)) })
       ] })
     ] }),
+    /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: {
+      backgroundColor: COLORS.card,
+      borderRadius: "16px",
+      padding: "16px",
+      boxShadow: "0 4px 12px -4px rgba(0,0,0,0.05)",
+      marginBottom: "20px"
+    }, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: {
+        fontSize: "14px",
+        fontWeight: 600,
+        color: COLORS.textSecondary,
+        marginBottom: "12px",
+        textAlign: "center"
+      }, children: "Related Calculators" }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
+        width: "100%"
+      }, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: "8px" }, children: [
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+            "button",
+            {
+              className: "related-btn",
+              style: {
+                flex: 1,
+                padding: "12px 10px",
+                backgroundColor: COLORS.inputBg,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: "10px",
+                color: COLORS.primary,
+                fontWeight: 600,
+                fontSize: "14px",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px"
+              },
+              onMouseEnter: (e) => {
+                e.currentTarget.style.backgroundColor = COLORS.accentLight;
+                e.currentTarget.style.borderColor = COLORS.primary;
+              },
+              onMouseLeave: (e) => {
+                e.currentTarget.style.backgroundColor = COLORS.inputBg;
+                e.currentTarget.style.borderColor = COLORS.border;
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(TrendingUp, { size: 16 }),
+                "Retirement Calculator"
+              ]
+            }
+          ),
+          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+            "button",
+            {
+              className: "related-btn",
+              style: {
+                flex: 1,
+                padding: "12px 10px",
+                backgroundColor: COLORS.inputBg,
+                border: `1px solid ${COLORS.border}`,
+                borderRadius: "10px",
+                color: COLORS.primary,
+                fontWeight: 600,
+                fontSize: "14px",
+                cursor: "pointer",
+                transition: "all 0.2s",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "6px"
+              },
+              onMouseEnter: (e) => {
+                e.currentTarget.style.backgroundColor = COLORS.accentLight;
+                e.currentTarget.style.borderColor = COLORS.primary;
+              },
+              onMouseLeave: (e) => {
+                e.currentTarget.style.backgroundColor = COLORS.inputBg;
+                e.currentTarget.style.borderColor = COLORS.border;
+              },
+              children: [
+                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Target, { size: 16 }),
+                "Mortgage Calculator"
+              ]
+            }
+          )
+        ] }),
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { display: "flex", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(
+          "button",
+          {
+            className: "related-btn",
+            style: {
+              flex: "0 1 50%",
+              padding: "12px 10px",
+              backgroundColor: COLORS.inputBg,
+              border: `1px solid ${COLORS.border}`,
+              borderRadius: "10px",
+              color: COLORS.primary,
+              fontWeight: 600,
+              fontSize: "14px",
+              cursor: "pointer",
+              transition: "all 0.2s",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "6px"
+            },
+            onMouseEnter: (e) => {
+              e.currentTarget.style.backgroundColor = COLORS.accentLight;
+              e.currentTarget.style.borderColor = COLORS.primary;
+            },
+            onMouseLeave: (e) => {
+              e.currentTarget.style.backgroundColor = COLORS.inputBg;
+              e.currentTarget.style.borderColor = COLORS.border;
+            },
+            children: [
+              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Check, { size: 16 }),
+              "Portfolio Analyzer"
+            ]
+          }
+        ) })
+      ] })
+    ] }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.footer, className: "no-print", children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { style: styles.footerBtn, onClick: () => setShowSubscribeModal(true), className: "btn-press", children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, { size: 16 }),
+        " Subscribe"
+      ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { style: styles.footerBtn, onClick: clearInputs, className: "btn-press", children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(RotateCcw, { size: 16 }),
-        " Reset Defaults"
+        " Reset"
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("button", { style: styles.footerBtn, className: "btn-press", children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Heart, { size: 16 }),
@@ -26529,7 +26699,7 @@ function Calculator({ initialData: initialData2 }) {
       ] })
     ] }),
     showFeedbackModal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.modalOverlay, onClick: () => setShowFeedbackModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.modalContent, onClick: (e) => e.stopPropagation(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { style: styles.modalClose, onClick: () => setShowFeedbackModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Minus, { size: 24, style: { transform: "rotate(45deg)" } }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { style: styles.modalClose, onClick: () => setShowFeedbackModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { size: 24 }) }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: "24px", fontWeight: 800, marginBottom: "8px", color: COLORS.textMain }, children: "Feedback" }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: "14px", color: COLORS.textSecondary, marginBottom: "24px" }, children: "Help us improve the calculator." }),
       feedbackStatus === "success" ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { textAlign: "center", padding: "20px", color: COLORS.primary, fontWeight: 600 }, children: "Thanks for your feedback!" }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
@@ -26556,7 +26726,7 @@ function Calculator({ initialData: initialData2 }) {
       ] })
     ] }) }),
     showSubscribeModal && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.modalOverlay, onClick: () => setShowSubscribeModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.modalContent, onClick: (e) => e.stopPropagation(), children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { style: styles.modalClose, onClick: () => setShowSubscribeModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Minus, { size: 24, style: { transform: "rotate(45deg)" } }) }),
+      /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { style: styles.modalClose, onClick: () => setShowSubscribeModal(false), children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, { size: 24 }) }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: "24px", fontWeight: 800, marginBottom: "8px", color: COLORS.textMain }, children: "Stay Updated" }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontSize: "14px", color: COLORS.textSecondary, marginBottom: "24px" }, children: "Get the latest health tips and calculator updates delivered to your inbox." }),
       subscribeStatus === "success" ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { textAlign: "center", padding: "20px", color: COLORS.primary, fontWeight: 600 }, children: [
@@ -26575,7 +26745,6 @@ function Calculator({ initialData: initialData2 }) {
             }
           )
         ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginBottom: "20px", minHeight: "120px", display: "flex", justifyContent: "center" }, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { id: "turnstile-widget" }) }),
         subscribeStatus === "error" && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { color: COLORS.red, fontSize: "14px", marginBottom: "16px", textAlign: "center" }, children: subscribeMessage }),
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           "button",
@@ -26827,6 +26996,14 @@ lucide-react/dist/esm/icons/camera.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
+lucide-react/dist/esm/icons/check.js:
+  (**
+   * @license lucide-react v0.554.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
 lucide-react/dist/esm/icons/chevron-down.js:
   (**
    * @license lucide-react v0.554.0 - ISC
@@ -26908,6 +27085,30 @@ lucide-react/dist/esm/icons/rotate-ccw.js:
    *)
 
 lucide-react/dist/esm/icons/shopping-cart.js:
+  (**
+   * @license lucide-react v0.554.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/target.js:
+  (**
+   * @license lucide-react v0.554.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/trending-up.js:
+  (**
+   * @license lucide-react v0.554.0 - ISC
+   *
+   * This source code is licensed under the ISC license.
+   * See the LICENSE file in the root directory of this source tree.
+   *)
+
+lucide-react/dist/esm/icons/x.js:
   (**
    * @license lucide-react v0.554.0 - ISC
    *
