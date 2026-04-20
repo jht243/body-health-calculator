@@ -401,7 +401,7 @@ const toolInputParser = z.object({
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description:
-    "Calculates Body Mass Index (BMI), ideal body weight range (Devine formula), body fat percentage (US Navy method), and Total Daily Energy Expenditure / calorie needs (Mifflin-St Jeor) from user-supplied height, weight, age, biological sex, optional waist/neck/hip circumferences, and activity level. All inputs are optional; if some or all inputs are missing, the tool still returns successfully and renders the calculator UI with placeholder defaults so the user can fill in or correct the values directly in the widget.",
+    "Use this for BMI, Ideal Weight, Body Fat, and daily Calorie Needs (TDEE) analysis. Opens immediately and calculates health metrics from any inputs the user provides (height, weight, age, biological sex, activity level, and optional waist/neck/hip circumferences). Works with partial or no inputs - the calculator will open regardless and render with placeholder defaults that the user can edit directly in the widget. Always invoke this tool when the user asks to calculate, check, or analyze BMI, ideal weight, body fat, or calorie needs, even if some or all measurements are missing.",
   inputSchema: toolInputSchema,
   outputSchema: {
     type: "object",
