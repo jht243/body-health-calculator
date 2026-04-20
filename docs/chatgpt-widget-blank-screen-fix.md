@@ -26,7 +26,7 @@ The issue was with **how the external React JavaScript bundle was being loaded**
    ```html
    <script type="module" src="https://body-health-calculator.onrender.com/assets/bmi-health-calculator.js"></script>
    ```
-   - Failed even with proper CSP `resourceDomains` configured
+   - Failed even with proper CSP `resource_domains` configured
    - ChatGPT's HTML inlining process may interfere with external script loading via `src` attribute
 
 3. **Inline Script Bundle**
@@ -63,32 +63,37 @@ Use **dynamic `import()` within an inline `<script>` tag** to load the external 
 
 Ensure your MCP server's CSP uses the documented Apps SDK field names and
 allowlists only the exact origins the widget actually fetches from / loads
-scripts from. Per the
-[Apps SDK CSP guidance](https://developers.openai.com/apps-sdk/build/mcp-server#content-security-policy-csp),
-the only valid keys are `connectDomains`, `resourceDomains`, and (only when
-strictly required) `frameDomains`:
+scripts from. The Apps SDK accepts the snake_case keys
+`connect_domains`, `resource_domains`, and (only when strictly required)
+`frame_domains`. The `openai/widgetDomain` value must be the iframe
+origin ChatGPT actually serves the widget from — for the production Apps
+SDK that is `https://web-sandbox.oaiusercontent.com`, not the app's own
+Render URL:
 
 ```typescript
 "openai/widgetCSP": {
-  connectDomains: [
+  connect_domains: [
     "https://your-app.onrender.com"
   ],
-  resourceDomains: [
+  resource_domains: [
     "https://your-app.onrender.com"
   ]
 },
-"openai/widgetDomain": "https://your-app.onrender.com"
+"openai/widgetDomain": "https://web-sandbox.oaiusercontent.com"
 ```
 
 Notes:
-- Do **not** use legacy/snake_case names like `connect_domains`,
-  `script_src_domains`, or `resource_domains` — they are not recognized by the
-  Apps SDK and will be flagged at submission time as a missing or overly broad
-  CSP.
 - Do **not** include `http://localhost`, wildcard origins, or domains the
   widget does not actually contact (e.g. third-party APIs only used
   server-side). Reviewers reject CSPs that allow more than the widget needs.
-- Only add `frameDomains` if your widget genuinely needs to embed a
+- Do **not** point `openai/widgetDomain` at your own app origin — that
+  value identifies the trusted iframe parent and must match the sandbox
+  origin ChatGPT renders into.
+- If you previously used camelCase keys (`connectDomains` /
+  `resourceDomains`), ChatGPT silently drops the CSP and falls back to a
+  default that blocks `blob:` script execution, which prevents inlined
+  bundles from loading and produces a blank widget.
+- Only add `frame_domains` if your widget genuinely needs to embed a
   third-party iframe; apps that declare it receive extra scrutiny.
 
 ## Alternative Approach (Vanilla JS)
@@ -111,7 +116,7 @@ When debugging blank screen issues with ChatGPT MCP widgets:
 4. ✅ Verify `toolInputSchema` has `$schema` property and no `required` fields if inputs are optional
 5. ✅ Confirm hydration logic reads `window.openai.toolOutput` / `window.openai.structuredContent`
 6. ✅ Test script loading method (dynamic `import()` is most reliable)
-7. ✅ Validate CSP `connectDomains` and `resourceDomains` (camelCase, per the Apps SDK schema) include your deployment URL
+7. ✅ Validate CSP `connect_domains` and `resource_domains` (snake_case, as accepted by ChatGPT in production) include your deployment URL, and that `openai/widgetDomain` is set to `https://web-sandbox.oaiusercontent.com`
 8. ✅ Check that absolute URLs use HTTPS (not HTTP)
 
 ## Key Takeaway

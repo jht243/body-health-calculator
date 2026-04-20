@@ -330,14 +330,14 @@ function widgetMeta(widget: BmiHealthWidget, bustCache: boolean = false) {
     ],
     "openai/widgetPrefersBorder": true,
     "openai/widgetCSP": {
-      connectDomains: [
+      connect_domains: [
         "https://body-health-calculator.onrender.com"
       ],
-      resourceDomains: [
+      resource_domains: [
         "https://body-health-calculator.onrender.com"
       ]
     },
-    "openai/widgetDomain": "https://body-health-calculator.onrender.com",
+    "openai/widgetDomain": "https://web-sandbox.oaiusercontent.com",
     "openai/toolInvocation/invoking": widget.invoking,
     "openai/toolInvocation/invoked": widget.invoked,
     "openai/widgetAccessible": true,
