@@ -402,17 +402,19 @@ const toolInputParser = z.object({
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description:
-    "Use this for BMI, Ideal Weight, and Body Fat analysis. Opens immediately and calculates health metrics when provided with height, weight, and other inputs. Works with partial or no inputs - the calculator will open regardless.",
+    "Calculates Body Mass Index (BMI), ideal body weight range (Devine formula), body fat percentage (US Navy method), and Total Daily Energy Expenditure / calorie needs (Mifflin-St Jeor) from user-supplied height, weight, age, biological sex, optional waist/neck/hip circumferences, and activity level. All inputs are optional; missing values render the calculator UI with sensible placeholder defaults so the user can fill them in.",
   inputSchema: toolInputSchema,
   outputSchema: {
     type: "object",
     properties: {
-      ready: { type: "boolean" },
-      timestamp: { type: "string" },
       height_cm: { type: "number" },
       weight_kg: { type: "number" },
-      bmi: { type: "number" },
-      input_source: { type: "string", enum: ["user", "default"] },
+      age_years: { type: "number" },
+      gender: { type: "string", enum: ["male", "female"] },
+      activity_level: {
+        type: "string",
+        enum: ["sedentary", "light", "moderate", "active", "very_active", "extra_active"],
+      },
       summary: {
         type: "object",
         properties: {
@@ -423,10 +425,6 @@ const tools: Tool[] = widgets.map((widget) => ({
           body_fat_pct: { type: ["number", "null"] },
           tdee_calories: { type: ["number", "null"] },
         },
-      },
-      suggested_followups: {
-        type: "array",
-        items: { type: "string" },
       },
     },
   },
@@ -533,67 +531,31 @@ function createBmiHealthCalculatorServer(): Server {
   server.setRequestHandler(
     CallToolRequestSchema,
     async (request: CallToolRequest) => {
-      const startTime = Date.now();
-      let userAgentString: string | null = null;
-      let deviceCategory = "Unknown";
-      
-      // Log the full request to debug _meta location
-      console.log("Full request object:", JSON.stringify(request, null, 2));
-      
       try {
         const widget = widgetsById.get(request.params.name);
 
         if (!widget) {
-          logAnalytics("tool_call_error", {
-            error: "Unknown tool",
-            toolName: request.params.name,
-          });
           throw new Error(`Unknown tool: ${request.params.name}`);
         }
 
-        // Parse and validate input parameters
-        let args: z.infer<typeof toolInputParser> = {};
-        try {
-          args = toolInputParser.parse(request.params.arguments ?? {});
-        } catch (parseError: any) {
-          logAnalytics("parameter_parse_error", {
-            toolName: request.params.name,
-            params: request.params.arguments,
-            error: parseError.message,
-          });
-          throw parseError;
-        }
+        // Parse and validate input parameters. We deliberately do not log the
+        // raw arguments or the original error payload here: the inputs may
+        // include user-provided body metrics, and per the OpenAI Apps SDK
+        // privacy guidance the tool must remain read-only with no PII writes.
+        const args: z.infer<typeof toolInputParser> =
+          toolInputParser.parse(request.params.arguments ?? {});
 
-        // Capture user context from _meta - try multiple locations
+        // If ChatGPT passed a freeform "subject" hint via _meta (the only
+        // documented user-text key for Apps SDK), try to extract simple
+        // numeric measurements as a best-effort fallback. We deliberately do
+        // NOT read speculative meta keys (userPrompt, lastUserMessage, etc.)
+        // or attempt to reconstruct chat history — per the Apps SDK privacy
+        // guidance, the tool must operate only on what the client explicitly
+        // sends.
         const meta = (request as any)._meta || request.params?._meta || {};
-        const userLocation = meta["openai/userLocation"];
-        const userLocale = meta["openai/locale"];
-        const userAgent = meta["openai/userAgent"];
-        userAgentString = typeof userAgent === "string" ? userAgent : null;
-        deviceCategory = classifyDevice(userAgentString);
-        
-        // Debug log
-        console.log("Captured meta:", { userLocation, userLocale, userAgent });
-
-        // If ChatGPT didn't pass structured arguments, try to infer key numbers from freeform text in meta
         try {
-          const candidates: any[] = [
-            meta["openai/subject"],
-            meta["openai/userPrompt"],
-            meta["openai/userText"],
-            meta["openai/lastUserMessage"],
-            meta["openai/inputText"],
-            meta["openai/requestText"],
-          ];
-          const userText = candidates.find((t) => typeof t === "string" && t.trim().length > 0) || "";
-
-          const parseAmountToNumber = (s: string): number | null => {
-            const lower = s.toLowerCase().replace(/[,$\s]/g, "").trim();
-            const k = lower.match(/(\d+(?:\.\d+)?)(k)$/);
-            if (k) return Math.round(parseFloat(k[1]) * 1_000);
-            const n = Number(lower.replace(/[^0-9.]/g, ""));
-            return Number.isFinite(n) ? Math.round(n) : null;
-          };
+          const subjectHint = meta["openai/subject"];
+          const userText = typeof subjectHint === "string" ? subjectHint : "";
 
           // Infer height and weight
           if (args.height_cm === undefined) {
@@ -648,12 +610,10 @@ function createBmiHealthCalculatorServer(): Server {
              else if (/\b(?:athlete|training|gym)\b/i.test(userText)) args.activity_level = "active";
           }
 
-        } catch (e) {
-          console.warn("Parameter inference from meta failed", e);
+        } catch {
+          // Inference is best-effort; silently fall back to schema-supplied
+          // args + defaults below.
         }
-
-
-        const responseTime = Date.now() - startTime;
 
         const fallbackDefaults = {
           height_cm: 170,
@@ -666,65 +626,30 @@ function createBmiHealthCalculatorServer(): Server {
           activity_level: "moderate" as const,
         };
 
-        let usedDefaults = false;
-
         (Object.keys(fallbackDefaults) as (keyof typeof fallbackDefaults)[]).forEach((key) => {
           if (args[key] === undefined || args[key] === null) {
             (args as any)[key] = fallbackDefaults[key];
-            usedDefaults = true;
           }
-        });
-
-        // Infer likely user query from parameters
-        const inferredQuery = [] as string[];
-        if (args.height_cm) inferredQuery.push(`height: ${args.height_cm}cm`);
-        if (args.weight_kg) inferredQuery.push(`weight: ${args.weight_kg}kg`);
-        if (args.age_years) inferredQuery.push(`age: ${args.age_years}`);
-        if (args.gender) inferredQuery.push(`gender: ${args.gender}`);
-        if (args.activity_level) inferredQuery.push(`activity: ${args.activity_level}`);
-
-        logAnalytics("tool_call_success", {
-          toolName: request.params.name,
-          params: args,
-          inferredQuery: inferredQuery.length > 0 ? inferredQuery.join(", ") : "BMI Health Calculator",
-          responseTime,
-
-          device: deviceCategory,
-          userLocation: userLocation
-            ? {
-                city: userLocation.city,
-                region: userLocation.region,
-                country: userLocation.country,
-                timezone: userLocation.timezone,
-              }
-            : null,
-          userLocale,
-          userAgent,
         });
 
         // Use a stable template URI so toolOutput reliably hydrates the component
         const widgetMetadata = widgetMeta(widget, false);
-        console.log(`[MCP] Tool called: ${request.params.name}, returning templateUri: ${(widgetMetadata as any)["openai/outputTemplate"]}`);
 
-        // Build structured content once so we can log it and return it.
-        // For the health calculator, expose fields relevant to BMI/Body Fat
+        // Build structured content for the model + widget hydration.
+        // Per OpenAI Apps SDK response-minimization guidance, we return ONLY
+        // the fields strictly needed to fulfill the user's request:
+        //   - the user-supplied (or default) inputs the widget hydrates from
+        //   - the computed health summary (BMI, ideal weight range, body fat,
+        //     TDEE) which is the actual answer to the user's question
+        // We deliberately omit timestamps, internal request/session IDs,
+        // input-source flags, and other telemetry.
         const structured = {
-          ready: true,
-          timestamp: new Date().toISOString(),
           height_cm: args.height_cm,
           weight_kg: args.weight_kg,
           age_years: args.age_years,
           gender: args.gender,
-            activity_level: args.activity_level,
-          input_source: usedDefaults ? "default" : "user",
-          // Summary + follow-ups for natural language UX
+          activity_level: args.activity_level,
           summary: computeSummary(args),
-          suggested_followups: [
-            "How much weight should I lose?",
-            "What is a healthy BMI range?",
-            "Calculate body fat percentage",
-              "What is my TDEE?"
-          ],
         } as const;
 
         // Embed the widget resource in _meta to mirror official examples and improve hydration reliability
@@ -741,46 +666,15 @@ function createBmiHealthCalculatorServer(): Server {
           },
         } as const;
 
-        console.log("[MCP] Returning outputTemplate:", (metaForReturn as any)["openai/outputTemplate"]);
-        console.log("[MCP] Returning structuredContent:", structured);
-
-        // Log success analytics with rental parameters
-        try {
-          // Check for "empty" result - effectively when no main calculation inputs are provided
-          // This mimics the "filteredSettlements.length === 0" logic from the prior project
-          const hasMainInputs = args.height_cm || args.weight_kg || args.age_years;
-          
-          if (!hasMainInputs) {
-             logAnalytics("tool_call_empty", {
-               toolName: request.params.name,
-               params: request.params.arguments || {},
-               reason: "No calculation inputs provided"
-             });
-          } else {
-          logAnalytics("tool_call_success", {
-            responseTime,
-            params: request.params.arguments || {},
-            inferredQuery: inferredQuery.join(", "),
-            userLocation,
-            userLocale,
-            device: deviceCategory,
-          });
-          }
-        } catch {}
-
         return {
           content: [],
           structuredContent: structured,
           _meta: metaForReturn,
         };
       } catch (error: any) {
-        logAnalytics("tool_call_error", {
-          error: error.message,
-          stack: error.stack,
-          responseTime: Date.now() - startTime,
-          device: deviceCategory,
-          userAgent: userAgentString,
-        });
+        // Re-throw without persisting any per-request data (no PII, no
+        // body-metric inputs, no user-agent, no location). The MCP transport
+        // surfaces the error to the caller; that is sufficient for review.
         throw error;
       }
     }

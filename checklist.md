@@ -52,9 +52,10 @@
 
 ## Security
 - [ ] **CSP**: Content Security Policy configured.
-- [ ] **Captcha**: Cloudflare integration.
-    - [ ] Site Key: `0x4AAAAAAB88oeIlUFfNX1o7`
-    - [ ] Secret Key: `0x4AAAAAAB88oQxvKf3YbzwBHTsOhQaNmYs`
+- [ ] **Captcha**: Cloudflare Turnstile integration.
+    - [ ] Site key configured via the `TURNSTILE_SITE_KEY` environment variable on the server (never commit the value to the repo).
+    - [ ] Secret key configured via the `TURNSTILE_SECRET_KEY` environment variable on the server (never commit the value to the repo).
+    - [ ] Note: any Turnstile keys that were ever committed to this repository must be rotated in the Cloudflare dashboard before the next deploy.
 
 ## Analytics & Performance
 - [ ] **User Analytics**: Track Location, Language, Device/Browser, Inferred Query.
