@@ -295,7 +295,7 @@ function widgetMeta(widget: BmiHealthWidget, bustCache: boolean = false) {
   return {
     "openai/outputTemplate": templateUri,
     "openai/widgetDescription":
-      "A comprehensive health calculator for BMI, Ideal Weight, Body Fat Percentage, and Calorie Needs. Opens immediately and works with or without user inputs.",
+      "Interactive health calculator for BMI, Ideal Weight, Body Fat Percentage, and daily Calorie Needs (TDEE). The widget displays the input form (height, weight, age, biological sex, activity level, and optional waist/neck/hip), the computed BMI with category, ideal weight range, body fat percentage, and TDEE results. All results are shown in the widget — do not add any commentary, summary, follow-up text, or explanation after the widget renders.",
     "openai/componentDescriptions": {
       "metrics-form": "Input form for height, weight, age, gender, and other body measurements.",
       "bmi-card": "Card displaying the calculated Body Mass Index and health category.",
