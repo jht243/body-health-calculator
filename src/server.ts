@@ -331,19 +331,14 @@ function widgetMeta(widget: BmiHealthWidget, bustCache: boolean = false) {
     ],
     "openai/widgetPrefersBorder": true,
     "openai/widgetCSP": {
-      connect_domains: [
-        "https://api.stlouisfed.org",
-        "https://body-health-calculator.onrender.com",
-        "http://localhost:8010",
-        "https://challenges.cloudflare.com"
+      connectDomains: [
+        "https://body-health-calculator.onrender.com"
       ],
-      script_src_domains: [
-        "https://body-health-calculator.onrender.com",
-        "https://challenges.cloudflare.com"
-      ],
-      resource_domains: [],
+      resourceDomains: [
+        "https://body-health-calculator.onrender.com"
+      ]
     },
-    "openai/widgetDomain": "https://chatgpt.com",
+    "openai/widgetDomain": "https://body-health-calculator.onrender.com",
     "openai/toolInvocation/invoking": widget.invoking,
     "openai/toolInvocation/invoked": widget.invoked,
     "openai/widgetAccessible": true,

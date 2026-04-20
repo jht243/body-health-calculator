@@ -19,6 +19,8 @@ import {
   X
 } from "lucide-react";
 
+const API_BASE = "https://body-health-calculator.onrender.com";
+
 const COLORS = {
   primary: "#56C596", // Mint Green
   primaryDark: "#3aa87b",
@@ -332,7 +334,7 @@ export default function Calculator({ initialData }: { initialData?: any }) {
     setSubscribeStatus("loading");
     try {
         // In a real app, the base URL might need to be dynamic if not served from root
-        const response = await fetch("/api/subscribe", {
+        const response = await fetch(`${API_BASE}/api/subscribe`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -367,7 +369,7 @@ export default function Calculator({ initialData }: { initialData?: any }) {
 
     setFeedbackStatus("submitting");
     try {
-        const response = await fetch("/api/track", {
+        const response = await fetch(`${API_BASE}/api/track`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

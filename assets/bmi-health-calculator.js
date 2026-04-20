@@ -24670,6 +24670,7 @@ var X = createLucideIcon("x", __iconNode16);
 
 // src/component.tsx
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
+var API_BASE = "https://body-health-calculator.onrender.com";
 var COLORS = {
   primary: "#56C596",
   // Mint Green
@@ -24901,7 +24902,7 @@ function Calculator({ initialData: initialData2 }) {
     }
     setSubscribeStatus("loading");
     try {
-      const response = await fetch("/api/subscribe", {
+      const response = await fetch(`${API_BASE}/api/subscribe`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -24933,7 +24934,7 @@ function Calculator({ initialData: initialData2 }) {
     if (!feedbackText.trim()) return;
     setFeedbackStatus("submitting");
     try {
-      const response = await fetch("/api/track", {
+      const response = await fetch(`${API_BASE}/api/track`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -26805,7 +26806,7 @@ var ErrorBoundary = class extends import_react4.default.Component {
   componentDidCatch(error, errorInfo) {
     console.error("Widget Error Boundary caught error:", error, errorInfo);
     try {
-      fetch("/api/track", {
+      fetch("https://body-health-calculator.onrender.com/api/track", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

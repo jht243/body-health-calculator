@@ -20,7 +20,7 @@ class ErrorBoundary extends React.Component<
     console.error("Widget Error Boundary caught error:", error, errorInfo);
     // Log to server
     try {
-        fetch("/api/track", {
+        fetch("https://body-health-calculator.onrender.com/api/track", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
