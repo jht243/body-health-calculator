@@ -7,10 +7,6 @@ import {
   ChevronDown,
   Printer,
   Heart,
-  Camera,
-  Upload,
-  Loader,
-  ShoppingCart,
   Mail,
   MessageSquare,
   TrendingUp,
@@ -43,7 +39,7 @@ const COLORS = {
 type UnitSystem = "US" | "Metric";
 type Gender = "male" | "female";
 type ActivityLevel = "sedentary" | "light" | "moderate" | "active" | "very_active" | "extra_active";
-type CalculatorType = "BMI Calculator" | "Ideal Weight Calculator" | "Body Fat Calculator" | "Calorie Calculator" | "My Photo Health Calculator";
+type CalculatorType = "BMI Calculator" | "Ideal Weight Calculator" | "Body Fat Calculator" | "Calorie Calculator";
 
 interface CalculatorValues {
   units: UnitSystem;
@@ -61,8 +57,6 @@ interface CalculatorValues {
   hipCm: string;
   hipIn: string;
   activityLevel: ActivityLevel;
-  frontPhoto?: string;
-  sidePhoto?: string;
 }
 
 interface CalculatorData {
@@ -175,17 +169,14 @@ const DEFAULT_VALUES: CalculatorValues = {
   neckIn: "19",
   waistIn: "37",
   hipIn: "37",
-  activityLevel: "moderate",
-  frontPhoto: "",
-  sidePhoto: ""
+  activityLevel: "moderate"
 };
 
 const CALCULATOR_TYPES: CalculatorType[] = [
-  "BMI Calculator", 
-  "Ideal Weight Calculator", 
-  "Body Fat Calculator", 
-  "Calorie Calculator",
-  "My Photo Health Calculator"
+  "BMI Calculator",
+  "Ideal Weight Calculator",
+  "Body Fat Calculator",
+  "Calorie Calculator"
 ];
 
 const STORAGE_KEY = "HEALTH_CALCULATOR_DATA";
@@ -205,8 +196,7 @@ const loadSavedData = (): Record<CalculatorType, CalculatorData> => {
             "BMI Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
             "Ideal Weight Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
             "Body Fat Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-            "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-            "My Photo Health Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
+            "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
         };
 
         // Only copy over values that exist in our current schema
@@ -230,8 +220,7 @@ const loadSavedData = (): Record<CalculatorType, CalculatorData> => {
     "BMI Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
     "Ideal Weight Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
     "Body Fat Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-    "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-    "My Photo Health Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
+    "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
   };
 };
 
@@ -239,7 +228,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
   console.log("[BMI Calculator] Component mounting with initialData:", initialData);
   
   const [calculatorType, setCalculatorType] = useState<CalculatorType>("BMI Calculator");
-  const [isAnalyzing, setIsAnalyzing] = useState(false);
   
   const [calculators, setCalculators] = useState<Record<CalculatorType, CalculatorData>>(() => {
     console.log("[BMI Calculator] Initializing state...");
@@ -410,8 +398,7 @@ export default function Calculator({ initialData }: { initialData?: any }) {
     units, gender, age, activityLevel,
     heightCm, heightFt, heightIn,
     weightKg, weightLbs,
-    neckCm, neckIn, waistCm, waistIn, hipCm, hipIn,
-    frontPhoto, sidePhoto
+    neckCm, neckIn, waistCm, waistIn, hipCm, hipIn
   } = currentCalc.values;
 
   const updateVal = (field: keyof CalculatorValues, value: any, logicalGroup?: string) => {
@@ -471,8 +458,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
       calculateBodyFat();
     } else if (calculatorType === "Calorie Calculator") {
       calculateCalories();
-    } else if (calculatorType === "My Photo Health Calculator") {
-      calculatePhotoHealth();
     }
   };
 
@@ -675,244 +660,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
     });
   };
 
-  const analyzeImage = (imageUrl: string): Promise<{width: number, height: number, bodyRatio: number, centerMass: number}> => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        const canvas = document.createElement('canvas');
-        const ctx = canvas.getContext('2d');
-        if (!ctx) {
-          resolve({width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5});
-          return;
-        }
-        
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        
-        // Find body region by analyzing pixel density and edges
-        let bodyPixels = 0;
-        let totalPixels = 0;
-        let centerX = 0;
-        let centerY = 0;
-        let minX = canvas.width;
-        let maxX = 0;
-        let minY = canvas.height;
-        let maxY = 0;
-        
-        // Sample pixels (every 4th pixel for performance)
-        for (let i = 0; i < data.length; i += 16) {
-          const x = (i / 4) % canvas.width;
-          const y = Math.floor((i / 4) / canvas.width);
-          
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const a = data[i + 3];
-          
-          // Skip transparent pixels
-          if (a < 128) continue;
-          
-          totalPixels++;
-
-          // Detect skin tones and body-like colors (not background)
-          const brightness = (r + g + b) / 3;
-          const isLikelyBody = brightness > 50 && brightness < 240 && 
-                              (r > 80 || g > 80 || b > 80);
-          
-          if (isLikelyBody) {
-            bodyPixels++;
-            centerX += x;
-            centerY += y;
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
-          }
-        }
-        
-        const bodyWidth = maxX - minX;
-        const bodyHeight = maxY - minY;
-        const bodyRatio = bodyHeight > 0 ? bodyWidth / bodyHeight : 0.5;
-        const centerMass = bodyPixels > 0 ? centerY / bodyPixels / canvas.height : 0.5;
-        
-        resolve({
-          width: bodyWidth,
-          height: bodyHeight,
-          bodyRatio: bodyRatio,
-          centerMass: centerMass
-        });
-      };
-      img.onerror = () => {
-        resolve({width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5});
-      };
-      img.src = imageUrl;
-    });
-  };
-
-  const calculatePhotoHealth = async () => {
-    if (!frontPhoto && !sidePhoto) {
-      alert("Please upload at least one photo (front or side) to analyze.");
-      return;
-    }
-    
-    setIsAnalyzing(true);
-    
-    try {
-      let frontAnalysis = {width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5};
-      let sideAnalysis = {width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5};
-      
-      if (frontPhoto) {
-        frontAnalysis = await analyzeImage(frontPhoto);
-      }
-      if (sidePhoto) {
-        sideAnalysis = await analyzeImage(sidePhoto);
-      }
-      
-      // Combine analyses
-      const avgBodyRatio = (frontAnalysis.bodyRatio + sideAnalysis.bodyRatio) / 2;
-      const avgCenterMass = (frontAnalysis.centerMass + sideAnalysis.centerMass) / 2;
-      
-      // Estimate BMI based on body proportions
-      // Wider body ratio typically indicates higher BMI
-      // Lower center mass (more weight in lower body) can indicate different body types
-      let bmiEstimate = 18.5; // Start with minimum healthy BMI
-      
-      // Body ratio analysis: typical healthy ratio is around 0.35-0.45
-      // Higher ratio (wider relative to height) suggests higher BMI
-      if (avgBodyRatio > 0.5) {
-        bmiEstimate = 28 + (avgBodyRatio - 0.5) * 15; // Overweight to obese range
-      } else if (avgBodyRatio > 0.4) {
-        bmiEstimate = 22 + (avgBodyRatio - 0.4) * 60; // Normal to overweight
-      } else if (avgBodyRatio > 0.3) {
-        bmiEstimate = 18.5 + (avgBodyRatio - 0.3) * 35; // Underweight to normal
-      } else {
-        bmiEstimate = 16 + avgBodyRatio * 25; // Very underweight
-      }
-      
-      // Adjust based on center of mass (posture/body composition)
-      if (avgCenterMass > 0.55) {
-        bmiEstimate += 1.5; // More weight in lower body
-      } else if (avgCenterMass < 0.45) {
-        bmiEstimate -= 1.0; // More weight in upper body
-      }
-      
-      // Clamp to reasonable range
-      bmiEstimate = Math.max(15, Math.min(35, bmiEstimate));
-      
-      // Determine fitness level
-      let fitness = "";
-      let tips: string[] = [];
-      
-      if (bmiEstimate < 18.5) {
-        fitness = "Visual assessment suggests you may be underweight. Consider consulting a healthcare provider.";
-        tips = [
-          "Focus on nutrient-dense foods to support healthy weight gain.",
-          "Incorporate strength training to build muscle mass.",
-          "Consider working with a nutritionist to develop a healthy meal plan."
-        ];
-      } else if (bmiEstimate >= 18.5 && bmiEstimate < 25) {
-        fitness = "Your body proportions appear to be within a healthy range.";
-        if (avgBodyRatio < 0.38) {
-          fitness += " You appear to have a lean, athletic build.";
-          tips = [
-            "Maintain your current fitness routine.",
-            "Continue focusing on balanced nutrition.",
-            "Consider adding variety to prevent plateaus."
-          ];
-        } else {
-          tips = [
-            "Maintain a balanced diet with regular exercise.",
-            "Focus on both cardiovascular and strength training.",
-            "Stay hydrated and get adequate sleep for recovery."
-          ];
-        }
-      } else if (bmiEstimate >= 25 && bmiEstimate < 30) {
-        fitness = "Visual analysis suggests you may be slightly above ideal weight range.";
-        tips = [
-          "Consider a moderate calorie deficit (300-500 calories/day).",
-          "Increase daily activity with 150+ minutes of moderate exercise per week.",
-          "Focus on whole foods and reduce processed food intake.",
-          "Strength training can help build muscle while losing fat."
-        ];
-      } else {
-        fitness = "Visual assessment indicates you may benefit from a structured weight management plan.";
-        tips = [
-          "Consult with a healthcare provider before starting any weight loss program.",
-          "Aim for gradual weight loss (1-2 lbs per week).",
-          "Combine diet modifications with regular physical activity.",
-          "Consider working with a registered dietitian for personalized guidance."
-        ];
-      }
-      
-      // Add posture/body composition tips based on center mass
-      if (avgCenterMass > 0.55) {
-        tips.push("Your body composition suggests focusing on upper body strength training.");
-      } else if (avgCenterMass < 0.45) {
-        tips.push("Consider lower body and core strengthening exercises.");
-      }
-      
-      // Add general tips
-      if (frontPhoto && sidePhoto) {
-        tips.push("Having both front and side views provides a more comprehensive assessment.");
-      }
-      
-      updateResult({
-        bmiEstimate: bmiEstimate.toFixed(1),
-        fitness: fitness,
-        tips: tips
-      });
-    } catch (error) {
-      console.error("Error analyzing photos:", error);
-      updateResult({
-        bmiEstimate: "N/A",
-        fitness: "Unable to analyze photos. Please ensure images are clear and well-lit.",
-        tips: [
-          "Make sure photos are taken in good lighting.",
-          "Wear form-fitting clothing for better analysis.",
-          "Stand straight with arms at your sides."
-        ]
-      });
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
-  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>, field: "frontPhoto" | "sidePhoto") => {
-    if (e.target.files && e.target.files[0]) {
-      const url = URL.createObjectURL(e.target.files[0]);
-      updateVal(field, url);
-    }
-  };
-
-  const SUPPLEMENTS = [
-    {
-        id: 1,
-        title: "Whey Protein\nIsolate",
-        price: "$29.99",
-        image: "/assets/whey-protein.jpg",
-        link: "https://www.amazon.com/Optimum-Nutrition-Standard-Protein-Isolate/dp/B000QSNYGI/"
-    },
-    {
-        id: 2,
-        title: "Multivitamin\nComplex",
-        price: "$19.95",
-        image: "/assets/multivitamin.jpg",
-        link: "https://www.amazon.com/Amazon-Brand-Solimo-Multivitamin-Gummies/dp/B07JGW2JKF/"
-    },
-    {
-        id: 3,
-        title: "Omega-3\nFish Oil",
-        price: "$24.50",
-        image: "/assets/fish-oil.jpg",
-        link: "https://www.amazon.com/Nature-Made-Strength-Softgels-count/dp/B004U3Y9FM/"
-    }
-  ];
-
   const clearInputs = () => {
     updateResult(null);
     setCalculators(prev => {
@@ -960,14 +707,12 @@ export default function Calculator({ initialData }: { initialData?: any }) {
   const isIdeal = calculatorType === "Ideal Weight Calculator";
   const isBF = calculatorType === "Body Fat Calculator";
   const isCalorie = calculatorType === "Calorie Calculator";
-  const isPhoto = calculatorType === "My Photo Health Calculator";
 
   // Extract results for rendering
   const calculatedBmi = isBMI ? currentCalc.result : null;
   const idealWeights = isIdeal ? currentCalc.result : null;
   const bodyFatResult = isBF ? currentCalc.result : null;
   const calorieResult = isCalorie ? currentCalc.result : null;
-  const photoResult = isPhoto ? currentCalc.result : null;
 
   // BMI Visualization Data
   let bmiCategory = "";
@@ -1435,91 +1180,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
       transition: "color 0.2s",
       padding: "8px"
     },
-    photoUploadArea: {
-        border: `2px dashed ${COLORS.primary}`,
-        borderRadius: "12px",
-        backgroundColor: COLORS.accentLight,
-        height: "120px",
-        display: "flex",
-        flexDirection: "column" as const,
-        alignItems: "center",
-        justifyContent: "center",
-        cursor: "pointer",
-        transition: "all 0.2s",
-        position: "relative" as const
-    },
-    sectionTitle: {
-      fontSize: "20px",
-      fontWeight: 700,
-      color: COLORS.textMain,
-      marginBottom: "16px",
-      paddingLeft: "4px"
-    },
-    productGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-      gap: "16px"
-    },
-    productCard: {
-      backgroundColor: "white",
-      borderRadius: "16px",
-      padding: "16px",
-      boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
-      display: "flex",
-      flexDirection: "column" as const,
-      alignItems: "center",
-      transition: "transform 0.2s",
-      cursor: "pointer"
-    },
-    productImageArea: {
-      width: "100%",
-      aspectRatio: "1/1",
-      backgroundColor: "transparent",
-      borderRadius: "12px",
-      marginBottom: "12px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "hidden",
-      padding: "10px",
-      boxSizing: "border-box" as const
-    },
-    productTitle: {
-      fontSize: "14px",
-      fontWeight: 600,
-      color: COLORS.textMain,
-      marginBottom: "4px",
-      textAlign: "center" as const,
-      lineHeight: "1.3",
-      whiteSpace: "pre-wrap" as const,
-      height: "36px", // Force 2 lines height roughly
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    },
-    productPrice: {
-      fontSize: "14px",
-      fontWeight: 700,
-      color: COLORS.primary,
-      marginBottom: "12px"
-    },
-    buyButton: {
-      width: "100%",
-      backgroundColor: COLORS.blue,
-      color: "white",
-      border: "none",
-      padding: "8px",
-      borderRadius: "8px",
-      fontSize: "12px",
-      fontWeight: 600,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "6px",
-      textDecoration: "none",
-      cursor: "pointer",
-      transition: "opacity 0.2s"
-    },
     modalOverlay: {
       position: "fixed" as const,
       top: 0,
@@ -1610,7 +1270,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
           <option>Ideal Weight Calculator</option>
           <option>Body Fat Calculator</option>
           <option>Calorie Calculator</option>
-          <option>My Photo Health Calculator</option>
         </select>
         <div style={styles.dropdownIcon}>
           <ChevronDown size={20} />
@@ -1619,8 +1278,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
 
       {/* Input Section */}
       <div>
-        {/* Conditionally render tabs only if NOT photo calculator */}
-        {!isPhoto && (
         <div style={styles.tabs}>
           <div
             style={styles.tab(units === "US")}
@@ -1635,12 +1292,9 @@ export default function Calculator({ initialData }: { initialData?: any }) {
             Metric Units
           </div>
         </div>
-        )}
 
         <div style={styles.card}>
-          
-          {/* Conditionally render Age & Gender Row if NOT photo calculator */}
-          {!isPhoto && (
+
           <div style={styles.row}>
                 <div style={styles.column}>
             <div style={styles.label}>Age</div>
@@ -1672,11 +1326,8 @@ export default function Calculator({ initialData }: { initialData?: any }) {
           </div>
                 </div>
               </div>
-          )}
 
-          {/* Conditional Inputs */}
-          {!isPhoto && (
-              <>
+          <>
                 {/* Row 2: Height & Weight */}
           <div style={styles.row}>
                     <div style={styles.column}>
@@ -1808,60 +1459,13 @@ export default function Calculator({ initialData }: { initialData?: any }) {
                     </>
                 )}
               </>
-          )}
-
-          {/* Photo Upload Section */}
-          {isPhoto && (
-              <div style={styles.row}>
-                  <div style={styles.column}>
-                      <div style={styles.label}>Front Photo</div>
-                      <label style={{...styles.photoUploadArea, backgroundImage: frontPhoto ? `url(${frontPhoto})` : 'none', backgroundSize: 'cover', backgroundPosition: 'center'}}>
-                          {!frontPhoto && (
-              <>
-                                <Camera size={32} color={COLORS.primary} style={{marginBottom: 8}} />
-                                <span style={{fontSize: 12, color: COLORS.primary, fontWeight: 600}}>Tap to Upload</span>
-                              </>
-                          )}
-                <input
-                            type="file" 
-                            accept="image/*" 
-                            style={{display: 'none'}}
-                            onChange={(e) => handlePhotoUpload(e, 'frontPhoto')}
-                          />
-                      </label>
-                  </div>
-                  <div style={styles.column}>
-                      <div style={styles.label}>Side Photo</div>
-                      <label style={{...styles.photoUploadArea, backgroundImage: sidePhoto ? `url(${sidePhoto})` : 'none', backgroundSize: 'cover', backgroundPosition: 'center'}}>
-                          {!sidePhoto && (
-                              <>
-                                <Camera size={32} color={COLORS.primary} style={{marginBottom: 8}} />
-                                <span style={{fontSize: 12, color: COLORS.primary, fontWeight: 600}}>Tap to Upload</span>
-              </>
-            )}
-                          <input 
-                            type="file" 
-                            accept="image/*" 
-                            style={{display: 'none'}}
-                            onChange={(e) => handlePhotoUpload(e, 'sidePhoto')}
-                          />
-                      </label>
-          </div>
-              </div>
-          )}
 
           {/* Buttons */}
           <div style={styles.buttonRow}>
-            <button className="btn-press" style={styles.calcButton} onClick={calculate} disabled={isAnalyzing}>
-              {isAnalyzing ? (
-                  <>
-                    <Loader size={20} className="spin" /> Analyzing...
-                  </>
-              ) : (
-                  <>
-                    {isPhoto ? "Analyze My Photo" : "Analyze"} <Play size={20} fill="white" />
-                  </>
-              )}
+            <button className="btn-press" style={styles.calcButton} onClick={calculate}>
+              <>
+                Analyze <Play size={20} fill="white" />
+              </>
             </button>
           </div>
         </div>
@@ -2069,64 +1673,6 @@ export default function Calculator({ initialData }: { initialData?: any }) {
         </div>
       )}
 
-      {isPhoto && photoResult && (
-        <>
-        <div style={styles.resultCard}>
-          <div style={styles.resultHeader}>
-            <span style={styles.resultTitle}>Your Health Insights</span>
-          </div>
-          <div style={{marginBottom: "16px", fontSize: "14px", color: COLORS.textSecondary}}>
-            Based on visual analysis of your uploaded photos:
-          </div>
-          
-          <div style={styles.list}>
-            <div style={styles.listItem}>
-                <span>Visual BMI Estimate</span>
-                <span style={{fontWeight: 600, color: COLORS.textMain}}>{photoResult.bmiEstimate}</span>
-            </div>
-            <div style={styles.listItem}>
-                <span>General Fitness</span>
-                <span style={{fontWeight: 600, color: COLORS.textMain, maxWidth: "50%", textAlign: "right"}}>{photoResult.fitness}</span>
-            </div>
-            
-            <div style={{marginTop: "16px"}}>
-                <div style={{fontWeight: 600, marginBottom: "8px", color: COLORS.primary}}>Recommendations</div>
-                {photoResult.tips.map((tip: string, i: number) => (
-                    <div key={i} style={{display: "flex", gap: "8px", fontSize: "14px", marginBottom: "4px", color: COLORS.textMain}}>
-                        <span style={{color: COLORS.primary}}>•</span>
-                        <span>{tip}</span>
-                    </div>
-                ))}
-            </div>
-          </div>
-        </div>
-
-        <div style={{marginTop: "32px"}}>
-            <div style={styles.sectionTitle}>Suggested Supplements</div>
-            <div style={styles.productGrid}>
-                {SUPPLEMENTS.map(product => (
-                <div key={product.id} style={styles.productCard}>
-                    <div style={styles.productImageArea}>
-                        <img 
-                            src={product.image} 
-                            alt={product.title.replace('\n', ' ')} 
-                            style={{maxWidth: "100%", maxHeight: "100%", objectFit: "contain"}}
-                        />
-                    </div>
-                    <div style={{width: "100%", display: "flex", flexDirection: "column", alignItems: "center"}}>
-                        <div style={styles.productTitle}>{product.title}</div>
-                        <div style={styles.productPrice}>{product.price}</div>
-                        <a href={product.link} target="_blank" rel="noreferrer" style={styles.buyButton} className="btn-press">
-                            <ShoppingCart size={16} /> View Product
-                        </a>
-                    </div>
-                </div>
-                ))}
-            </div>
-        </div>
-        </>
-      )}
-      
       {/* Related Calculators Section */}
       <div style={{
           backgroundColor: COLORS.card,

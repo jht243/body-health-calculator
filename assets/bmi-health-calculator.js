@@ -24523,29 +24523,16 @@ var createLucideIcon = (iconName, iconNode) => {
   return Component;
 };
 
-// node_modules/lucide-react/dist/esm/icons/camera.js
-var __iconNode = [
-  [
-    "path",
-    {
-      d: "M13.997 4a2 2 0 0 1 1.76 1.05l.486.9A2 2 0 0 0 18.003 7H20a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h1.997a2 2 0 0 0 1.759-1.048l.489-.904A2 2 0 0 1 10.004 4z",
-      key: "18u6gg"
-    }
-  ],
-  ["circle", { cx: "12", cy: "13", r: "3", key: "1vg3eu" }]
-];
-var Camera = createLucideIcon("camera", __iconNode);
-
 // node_modules/lucide-react/dist/esm/icons/check.js
-var __iconNode2 = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
-var Check = createLucideIcon("check", __iconNode2);
+var __iconNode = [["path", { d: "M20 6 9 17l-5-5", key: "1gmf2c" }]];
+var Check = createLucideIcon("check", __iconNode);
 
 // node_modules/lucide-react/dist/esm/icons/chevron-down.js
-var __iconNode3 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
-var ChevronDown = createLucideIcon("chevron-down", __iconNode3);
+var __iconNode2 = [["path", { d: "m6 9 6 6 6-6", key: "qrunsl" }]];
+var ChevronDown = createLucideIcon("chevron-down", __iconNode2);
 
 // node_modules/lucide-react/dist/esm/icons/heart.js
-var __iconNode4 = [
+var __iconNode3 = [
   [
     "path",
     {
@@ -24554,30 +24541,17 @@ var __iconNode4 = [
     }
   ]
 ];
-var Heart = createLucideIcon("heart", __iconNode4);
-
-// node_modules/lucide-react/dist/esm/icons/loader.js
-var __iconNode5 = [
-  ["path", { d: "M12 2v4", key: "3427ic" }],
-  ["path", { d: "m16.2 7.8 2.9-2.9", key: "r700ao" }],
-  ["path", { d: "M18 12h4", key: "wj9ykh" }],
-  ["path", { d: "m16.2 16.2 2.9 2.9", key: "1bxg5t" }],
-  ["path", { d: "M12 18v4", key: "jadmvz" }],
-  ["path", { d: "m4.9 19.1 2.9-2.9", key: "bwix9q" }],
-  ["path", { d: "M2 12h4", key: "j09sii" }],
-  ["path", { d: "m4.9 4.9 2.9 2.9", key: "giyufr" }]
-];
-var Loader = createLucideIcon("loader", __iconNode5);
+var Heart = createLucideIcon("heart", __iconNode3);
 
 // node_modules/lucide-react/dist/esm/icons/mail.js
-var __iconNode6 = [
+var __iconNode4 = [
   ["path", { d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7", key: "132q7q" }],
   ["rect", { x: "2", y: "4", width: "20", height: "16", rx: "2", key: "izxlao" }]
 ];
-var Mail = createLucideIcon("mail", __iconNode6);
+var Mail = createLucideIcon("mail", __iconNode4);
 
 // node_modules/lucide-react/dist/esm/icons/message-square.js
-var __iconNode7 = [
+var __iconNode5 = [
   [
     "path",
     {
@@ -24586,14 +24560,14 @@ var __iconNode7 = [
     }
   ]
 ];
-var MessageSquare = createLucideIcon("message-square", __iconNode7);
+var MessageSquare = createLucideIcon("message-square", __iconNode5);
 
 // node_modules/lucide-react/dist/esm/icons/minus.js
-var __iconNode8 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
-var Minus = createLucideIcon("minus", __iconNode8);
+var __iconNode6 = [["path", { d: "M5 12h14", key: "1ays0h" }]];
+var Minus = createLucideIcon("minus", __iconNode6);
 
 // node_modules/lucide-react/dist/esm/icons/play.js
-var __iconNode9 = [
+var __iconNode7 = [
   [
     "path",
     {
@@ -24602,17 +24576,17 @@ var __iconNode9 = [
     }
   ]
 ];
-var Play = createLucideIcon("play", __iconNode9);
+var Play = createLucideIcon("play", __iconNode7);
 
 // node_modules/lucide-react/dist/esm/icons/plus.js
-var __iconNode10 = [
+var __iconNode8 = [
   ["path", { d: "M5 12h14", key: "1ays0h" }],
   ["path", { d: "M12 5v14", key: "s699le" }]
 ];
-var Plus = createLucideIcon("plus", __iconNode10);
+var Plus = createLucideIcon("plus", __iconNode8);
 
 // node_modules/lucide-react/dist/esm/icons/printer.js
-var __iconNode11 = [
+var __iconNode9 = [
   [
     "path",
     {
@@ -24623,50 +24597,36 @@ var __iconNode11 = [
   ["path", { d: "M6 9V3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v6", key: "1itne7" }],
   ["rect", { x: "6", y: "14", width: "12", height: "8", rx: "1", key: "1ue0tg" }]
 ];
-var Printer = createLucideIcon("printer", __iconNode11);
+var Printer = createLucideIcon("printer", __iconNode9);
 
 // node_modules/lucide-react/dist/esm/icons/rotate-ccw.js
-var __iconNode12 = [
+var __iconNode10 = [
   ["path", { d: "M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8", key: "1357e3" }],
   ["path", { d: "M3 3v5h5", key: "1xhq8a" }]
 ];
-var RotateCcw = createLucideIcon("rotate-ccw", __iconNode12);
-
-// node_modules/lucide-react/dist/esm/icons/shopping-cart.js
-var __iconNode13 = [
-  ["circle", { cx: "8", cy: "21", r: "1", key: "jimo8o" }],
-  ["circle", { cx: "19", cy: "21", r: "1", key: "13723u" }],
-  [
-    "path",
-    {
-      d: "M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12",
-      key: "9zh506"
-    }
-  ]
-];
-var ShoppingCart = createLucideIcon("shopping-cart", __iconNode13);
+var RotateCcw = createLucideIcon("rotate-ccw", __iconNode10);
 
 // node_modules/lucide-react/dist/esm/icons/target.js
-var __iconNode14 = [
+var __iconNode11 = [
   ["circle", { cx: "12", cy: "12", r: "10", key: "1mglay" }],
   ["circle", { cx: "12", cy: "12", r: "6", key: "1vlfrh" }],
   ["circle", { cx: "12", cy: "12", r: "2", key: "1c9p78" }]
 ];
-var Target = createLucideIcon("target", __iconNode14);
+var Target = createLucideIcon("target", __iconNode11);
 
 // node_modules/lucide-react/dist/esm/icons/trending-up.js
-var __iconNode15 = [
+var __iconNode12 = [
   ["path", { d: "M16 7h6v6", key: "box55l" }],
   ["path", { d: "m22 7-8.5 8.5-5-5L2 17", key: "1t1m79" }]
 ];
-var TrendingUp = createLucideIcon("trending-up", __iconNode15);
+var TrendingUp = createLucideIcon("trending-up", __iconNode12);
 
 // node_modules/lucide-react/dist/esm/icons/x.js
-var __iconNode16 = [
+var __iconNode13 = [
   ["path", { d: "M18 6 6 18", key: "1bl5f8" }],
   ["path", { d: "m6 6 12 12", key: "d8bk6v" }]
 ];
-var X = createLucideIcon("x", __iconNode16);
+var X = createLucideIcon("x", __iconNode13);
 
 // src/component.tsx
 var import_jsx_runtime = __toESM(require_jsx_runtime(), 1);
@@ -24773,16 +24733,13 @@ var DEFAULT_VALUES = {
   neckIn: "19",
   waistIn: "37",
   hipIn: "37",
-  activityLevel: "moderate",
-  frontPhoto: "",
-  sidePhoto: ""
+  activityLevel: "moderate"
 };
 var CALCULATOR_TYPES = [
   "BMI Calculator",
   "Ideal Weight Calculator",
   "Body Fat Calculator",
-  "Calorie Calculator",
-  "My Photo Health Calculator"
+  "Calorie Calculator"
 ];
 var STORAGE_KEY = "HEALTH_CALCULATOR_DATA";
 var EXPIRATION_DAYS = 30;
@@ -24798,8 +24755,7 @@ var loadSavedData = () => {
           "BMI Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
           "Ideal Weight Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
           "Body Fat Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-          "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-          "My Photo Health Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
+          "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
         };
         Object.keys(merged).forEach((key) => {
           if (data[key]) {
@@ -24820,14 +24776,12 @@ var loadSavedData = () => {
     "BMI Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
     "Ideal Weight Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
     "Body Fat Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-    "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null },
-    "My Photo Health Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
+    "Calorie Calculator": { values: { ...DEFAULT_VALUES }, touched: {}, result: null }
   };
 };
 function Calculator({ initialData: initialData2 }) {
   console.log("[BMI Calculator] Component mounting with initialData:", initialData2);
   const [calculatorType, setCalculatorType] = (0, import_react3.useState)("BMI Calculator");
-  const [isAnalyzing, setIsAnalyzing] = (0, import_react3.useState)(false);
   const [calculators, setCalculators] = (0, import_react3.useState)(() => {
     console.log("[BMI Calculator] Initializing state...");
     const loaded = loadSavedData();
@@ -24982,9 +24936,7 @@ function Calculator({ initialData: initialData2 }) {
     waistCm,
     waistIn,
     hipCm,
-    hipIn,
-    frontPhoto,
-    sidePhoto
+    hipIn
   } = currentCalc.values;
   const updateVal = (field, value, logicalGroup) => {
     setCalculators((prev) => {
@@ -25036,8 +24988,6 @@ function Calculator({ initialData: initialData2 }) {
       calculateBodyFat();
     } else if (calculatorType === "Calorie Calculator") {
       calculateCalories();
-    } else if (calculatorType === "My Photo Health Calculator") {
-      calculatePhotoHealth();
     }
   };
   const calculateBMI = () => {
@@ -25195,200 +25145,6 @@ function Calculator({ initialData: initialData2 }) {
       extremeGain: Math.round(tdee * 1.39)
     });
   };
-  const analyzeImage = (imageUrl) => {
-    return new Promise((resolve) => {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.onload = () => {
-        const canvas = document.createElement("canvas");
-        const ctx = canvas.getContext("2d");
-        if (!ctx) {
-          resolve({ width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5 });
-          return;
-        }
-        canvas.width = img.width;
-        canvas.height = img.height;
-        ctx.drawImage(img, 0, 0);
-        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        const data = imageData.data;
-        let bodyPixels = 0;
-        let totalPixels = 0;
-        let centerX = 0;
-        let centerY = 0;
-        let minX = canvas.width;
-        let maxX = 0;
-        let minY = canvas.height;
-        let maxY = 0;
-        for (let i = 0; i < data.length; i += 16) {
-          const x = i / 4 % canvas.width;
-          const y = Math.floor(i / 4 / canvas.width);
-          const r = data[i];
-          const g = data[i + 1];
-          const b = data[i + 2];
-          const a = data[i + 3];
-          if (a < 128) continue;
-          totalPixels++;
-          const brightness = (r + g + b) / 3;
-          const isLikelyBody = brightness > 50 && brightness < 240 && (r > 80 || g > 80 || b > 80);
-          if (isLikelyBody) {
-            bodyPixels++;
-            centerX += x;
-            centerY += y;
-            minX = Math.min(minX, x);
-            maxX = Math.max(maxX, x);
-            minY = Math.min(minY, y);
-            maxY = Math.max(maxY, y);
-          }
-        }
-        const bodyWidth = maxX - minX;
-        const bodyHeight = maxY - minY;
-        const bodyRatio = bodyHeight > 0 ? bodyWidth / bodyHeight : 0.5;
-        const centerMass = bodyPixels > 0 ? centerY / bodyPixels / canvas.height : 0.5;
-        resolve({
-          width: bodyWidth,
-          height: bodyHeight,
-          bodyRatio,
-          centerMass
-        });
-      };
-      img.onerror = () => {
-        resolve({ width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5 });
-      };
-      img.src = imageUrl;
-    });
-  };
-  const calculatePhotoHealth = async () => {
-    if (!frontPhoto && !sidePhoto) {
-      alert("Please upload at least one photo (front or side) to analyze.");
-      return;
-    }
-    setIsAnalyzing(true);
-    try {
-      let frontAnalysis = { width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5 };
-      let sideAnalysis = { width: 0, height: 0, bodyRatio: 0.5, centerMass: 0.5 };
-      if (frontPhoto) {
-        frontAnalysis = await analyzeImage(frontPhoto);
-      }
-      if (sidePhoto) {
-        sideAnalysis = await analyzeImage(sidePhoto);
-      }
-      const avgBodyRatio = (frontAnalysis.bodyRatio + sideAnalysis.bodyRatio) / 2;
-      const avgCenterMass = (frontAnalysis.centerMass + sideAnalysis.centerMass) / 2;
-      let bmiEstimate = 18.5;
-      if (avgBodyRatio > 0.5) {
-        bmiEstimate = 28 + (avgBodyRatio - 0.5) * 15;
-      } else if (avgBodyRatio > 0.4) {
-        bmiEstimate = 22 + (avgBodyRatio - 0.4) * 60;
-      } else if (avgBodyRatio > 0.3) {
-        bmiEstimate = 18.5 + (avgBodyRatio - 0.3) * 35;
-      } else {
-        bmiEstimate = 16 + avgBodyRatio * 25;
-      }
-      if (avgCenterMass > 0.55) {
-        bmiEstimate += 1.5;
-      } else if (avgCenterMass < 0.45) {
-        bmiEstimate -= 1;
-      }
-      bmiEstimate = Math.max(15, Math.min(35, bmiEstimate));
-      let fitness = "";
-      let tips = [];
-      if (bmiEstimate < 18.5) {
-        fitness = "Visual assessment suggests you may be underweight. Consider consulting a healthcare provider.";
-        tips = [
-          "Focus on nutrient-dense foods to support healthy weight gain.",
-          "Incorporate strength training to build muscle mass.",
-          "Consider working with a nutritionist to develop a healthy meal plan."
-        ];
-      } else if (bmiEstimate >= 18.5 && bmiEstimate < 25) {
-        fitness = "Your body proportions appear to be within a healthy range.";
-        if (avgBodyRatio < 0.38) {
-          fitness += " You appear to have a lean, athletic build.";
-          tips = [
-            "Maintain your current fitness routine.",
-            "Continue focusing on balanced nutrition.",
-            "Consider adding variety to prevent plateaus."
-          ];
-        } else {
-          tips = [
-            "Maintain a balanced diet with regular exercise.",
-            "Focus on both cardiovascular and strength training.",
-            "Stay hydrated and get adequate sleep for recovery."
-          ];
-        }
-      } else if (bmiEstimate >= 25 && bmiEstimate < 30) {
-        fitness = "Visual analysis suggests you may be slightly above ideal weight range.";
-        tips = [
-          "Consider a moderate calorie deficit (300-500 calories/day).",
-          "Increase daily activity with 150+ minutes of moderate exercise per week.",
-          "Focus on whole foods and reduce processed food intake.",
-          "Strength training can help build muscle while losing fat."
-        ];
-      } else {
-        fitness = "Visual assessment indicates you may benefit from a structured weight management plan.";
-        tips = [
-          "Consult with a healthcare provider before starting any weight loss program.",
-          "Aim for gradual weight loss (1-2 lbs per week).",
-          "Combine diet modifications with regular physical activity.",
-          "Consider working with a registered dietitian for personalized guidance."
-        ];
-      }
-      if (avgCenterMass > 0.55) {
-        tips.push("Your body composition suggests focusing on upper body strength training.");
-      } else if (avgCenterMass < 0.45) {
-        tips.push("Consider lower body and core strengthening exercises.");
-      }
-      if (frontPhoto && sidePhoto) {
-        tips.push("Having both front and side views provides a more comprehensive assessment.");
-      }
-      updateResult({
-        bmiEstimate: bmiEstimate.toFixed(1),
-        fitness,
-        tips
-      });
-    } catch (error) {
-      console.error("Error analyzing photos:", error);
-      updateResult({
-        bmiEstimate: "N/A",
-        fitness: "Unable to analyze photos. Please ensure images are clear and well-lit.",
-        tips: [
-          "Make sure photos are taken in good lighting.",
-          "Wear form-fitting clothing for better analysis.",
-          "Stand straight with arms at your sides."
-        ]
-      });
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-  const handlePhotoUpload = (e, field) => {
-    if (e.target.files && e.target.files[0]) {
-      const url = URL.createObjectURL(e.target.files[0]);
-      updateVal(field, url);
-    }
-  };
-  const SUPPLEMENTS = [
-    {
-      id: 1,
-      title: "Whey Protein\nIsolate",
-      price: "$29.99",
-      image: "/assets/whey-protein.jpg",
-      link: "https://www.amazon.com/Optimum-Nutrition-Standard-Protein-Isolate/dp/B000QSNYGI/"
-    },
-    {
-      id: 2,
-      title: "Multivitamin\nComplex",
-      price: "$19.95",
-      image: "/assets/multivitamin.jpg",
-      link: "https://www.amazon.com/Amazon-Brand-Solimo-Multivitamin-Gummies/dp/B07JGW2JKF/"
-    },
-    {
-      id: 3,
-      title: "Omega-3\nFish Oil",
-      price: "$24.50",
-      image: "/assets/fish-oil.jpg",
-      link: "https://www.amazon.com/Nature-Made-Strength-Softgels-count/dp/B004U3Y9FM/"
-    }
-  ];
   const clearInputs = () => {
     updateResult(null);
     setCalculators((prev) => {
@@ -25427,12 +25183,10 @@ function Calculator({ initialData: initialData2 }) {
   const isIdeal = calculatorType === "Ideal Weight Calculator";
   const isBF = calculatorType === "Body Fat Calculator";
   const isCalorie = calculatorType === "Calorie Calculator";
-  const isPhoto = calculatorType === "My Photo Health Calculator";
   const calculatedBmi = isBMI ? currentCalc.result : null;
   const idealWeights = isIdeal ? currentCalc.result : null;
   const bodyFatResult = isBF ? currentCalc.result : null;
   const calorieResult = isCalorie ? currentCalc.result : null;
-  const photoResult = isPhoto ? currentCalc.result : null;
   let bmiCategory = "";
   let bmiColor = COLORS.primary;
   const BMI_SEGMENTS = [
@@ -25905,92 +25659,6 @@ function Calculator({ initialData: initialData2 }) {
       transition: "color 0.2s",
       padding: "8px"
     },
-    photoUploadArea: {
-      border: `2px dashed ${COLORS.primary}`,
-      borderRadius: "12px",
-      backgroundColor: COLORS.accentLight,
-      height: "120px",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      cursor: "pointer",
-      transition: "all 0.2s",
-      position: "relative"
-    },
-    sectionTitle: {
-      fontSize: "20px",
-      fontWeight: 700,
-      color: COLORS.textMain,
-      marginBottom: "16px",
-      paddingLeft: "4px"
-    },
-    productGrid: {
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-      gap: "16px"
-    },
-    productCard: {
-      backgroundColor: "white",
-      borderRadius: "16px",
-      padding: "16px",
-      boxShadow: "0 4px 20px -4px rgba(0,0,0,0.1)",
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      transition: "transform 0.2s",
-      cursor: "pointer"
-    },
-    productImageArea: {
-      width: "100%",
-      aspectRatio: "1/1",
-      backgroundColor: "transparent",
-      borderRadius: "12px",
-      marginBottom: "12px",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      overflow: "hidden",
-      padding: "10px",
-      boxSizing: "border-box"
-    },
-    productTitle: {
-      fontSize: "14px",
-      fontWeight: 600,
-      color: COLORS.textMain,
-      marginBottom: "4px",
-      textAlign: "center",
-      lineHeight: "1.3",
-      whiteSpace: "pre-wrap",
-      height: "36px",
-      // Force 2 lines height roughly
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center"
-    },
-    productPrice: {
-      fontSize: "14px",
-      fontWeight: 700,
-      color: COLORS.primary,
-      marginBottom: "12px"
-    },
-    buyButton: {
-      width: "100%",
-      backgroundColor: COLORS.blue,
-      color: "white",
-      border: "none",
-      padding: "8px",
-      borderRadius: "8px",
-      fontSize: "12px",
-      fontWeight: 600,
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: "6px",
-      textDecoration: "none",
-      cursor: "pointer",
-      transition: "opacity 0.2s"
-    },
     modalOverlay: {
       position: "fixed",
       top: 0,
@@ -26079,15 +25747,14 @@ function Calculator({ initialData: initialData2 }) {
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "BMI Calculator" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "Ideal Weight Calculator" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "Body Fat Calculator" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "Calorie Calculator" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "My Photo Health Calculator" })
+            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("option", { children: "Calorie Calculator" })
           ]
         }
       ),
       /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.dropdownIcon, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ChevronDown, { size: 20 }) })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { children: [
-      !isPhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.tabs, children: [
+      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.tabs, children: [
         /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
           "div",
           {
@@ -26106,7 +25773,7 @@ function Calculator({ initialData: initialData2 }) {
         )
       ] }),
       /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.card, children: [
-        !isPhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.row, children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.row, children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.column, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.label, children: "Age" }),
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
@@ -26143,7 +25810,7 @@ function Calculator({ initialData: initialData2 }) {
             ] })
           ] })
         ] }),
-        !isPhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
           /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.row, children: [
             /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.column, children: [
               /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.label, children: "Height" }),
@@ -26292,50 +25959,8 @@ function Calculator({ initialData: initialData2 }) {
             ] })
           ] })
         ] }),
-        isPhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.row, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.column, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.label, children: "Front Photo" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { style: { ...styles.photoUploadArea, backgroundImage: frontPhoto ? `url(${frontPhoto})` : "none", backgroundSize: "cover", backgroundPosition: "center" }, children: [
-              !frontPhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Camera, { size: 32, color: COLORS.primary, style: { marginBottom: 8 } }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, color: COLORS.primary, fontWeight: 600 }, children: "Tap to Upload" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "input",
-                {
-                  type: "file",
-                  accept: "image/*",
-                  style: { display: "none" },
-                  onChange: (e) => handlePhotoUpload(e, "frontPhoto")
-                }
-              )
-            ] })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.column, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.label, children: "Side Photo" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("label", { style: { ...styles.photoUploadArea, backgroundImage: sidePhoto ? `url(${sidePhoto})` : "none", backgroundSize: "cover", backgroundPosition: "center" }, children: [
-              !sidePhoto && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Camera, { size: 32, color: COLORS.primary, style: { marginBottom: 8 } }),
-                /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: 12, color: COLORS.primary, fontWeight: 600 }, children: "Tap to Upload" })
-              ] }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-                "input",
-                {
-                  type: "file",
-                  accept: "image/*",
-                  style: { display: "none" },
-                  onChange: (e) => handlePhotoUpload(e, "sidePhoto")
-                }
-              )
-            ] })
-          ] })
-        ] }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.buttonRow, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn-press", style: styles.calcButton, onClick: calculate, disabled: isAnalyzing, children: isAnalyzing ? /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Loader, { size: 20, className: "spin" }),
-          " Analyzing..."
-        ] }) : /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-          isPhoto ? "Analyze My Photo" : "Analyze",
-          " ",
+        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.buttonRow, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", { className: "btn-press", style: styles.calcButton, onClick: calculate, children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
+          "Analyze ",
           /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Play, { size: 20, fill: "white" })
         ] }) }) })
       ] })
@@ -26505,50 +26130,6 @@ function Calculator({ initialData: initialData2 }) {
             /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontSize: "12px", color: COLORS.textSecondary }, children: "61%" })
           ] })
         ] })
-      ] })
-    ] }),
-    isPhoto && photoResult && /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(import_jsx_runtime.Fragment, { children: [
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.resultCard, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.resultHeader, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: styles.resultTitle, children: "Your Health Insights" }) }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { marginBottom: "16px", fontSize: "14px", color: COLORS.textSecondary }, children: "Based on visual analysis of your uploaded photos:" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.list, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.listItem, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "Visual BMI Estimate" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontWeight: 600, color: COLORS.textMain }, children: photoResult.bmiEstimate })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.listItem, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: "General Fitness" }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { fontWeight: 600, color: COLORS.textMain, maxWidth: "50%", textAlign: "right" }, children: photoResult.fitness })
-          ] }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: "16px" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: { fontWeight: 600, marginBottom: "8px", color: COLORS.primary }, children: "Recommendations" }),
-            photoResult.tips.map((tip, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { display: "flex", gap: "8px", fontSize: "14px", marginBottom: "4px", color: COLORS.textMain }, children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { style: { color: COLORS.primary }, children: "\u2022" }),
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", { children: tip })
-            ] }, i))
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { marginTop: "32px" }, children: [
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.sectionTitle, children: "Suggested Supplements" }),
-        /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.productGrid, children: SUPPLEMENTS.map((product) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: styles.productCard, children: [
-          /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.productImageArea, children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(
-            "img",
-            {
-              src: product.image,
-              alt: product.title.replace("\n", " "),
-              style: { maxWidth: "100%", maxHeight: "100%", objectFit: "contain" }
-            }
-          ) }),
-          /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: { width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }, children: [
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.productTitle, children: product.title }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", { style: styles.productPrice, children: product.price }),
-            /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", { href: product.link, target: "_blank", rel: "noreferrer", style: styles.buyButton, className: "btn-press", children: [
-              /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ShoppingCart, { size: 16 }),
-              " View Product"
-            ] })
-          ] })
-        ] }, product.id)) })
       ] })
     ] }),
     /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", { style: {
@@ -26989,14 +26570,6 @@ lucide-react/dist/esm/createLucideIcon.js:
    * See the LICENSE file in the root directory of this source tree.
    *)
 
-lucide-react/dist/esm/icons/camera.js:
-  (**
-   * @license lucide-react v0.554.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   *)
-
 lucide-react/dist/esm/icons/check.js:
   (**
    * @license lucide-react v0.554.0 - ISC
@@ -27014,14 +26587,6 @@ lucide-react/dist/esm/icons/chevron-down.js:
    *)
 
 lucide-react/dist/esm/icons/heart.js:
-  (**
-   * @license lucide-react v0.554.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   *)
-
-lucide-react/dist/esm/icons/loader.js:
   (**
    * @license lucide-react v0.554.0 - ISC
    *
@@ -27078,14 +26643,6 @@ lucide-react/dist/esm/icons/printer.js:
    *)
 
 lucide-react/dist/esm/icons/rotate-ccw.js:
-  (**
-   * @license lucide-react v0.554.0 - ISC
-   *
-   * This source code is licensed under the ISC license.
-   * See the LICENSE file in the root directory of this source tree.
-   *)
-
-lucide-react/dist/esm/icons/shopping-cart.js:
   (**
    * @license lucide-react v0.554.0 - ISC
    *

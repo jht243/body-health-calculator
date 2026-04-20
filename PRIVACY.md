@@ -101,8 +101,6 @@ MCP tool responses.
 
 ## Third parties
 
-- **Cloudflare Turnstile** — challenges the optional subscribe form to
-  defend against bot abuse. Only invoked if you submit the subscribe form.
 - **Buttondown** — newsletter provider; receives only the email address
   you submitted via the subscribe form, plus a tag identifying which
   newsletter list you opted into.

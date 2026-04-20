@@ -61,7 +61,6 @@ const ROOT_DIR = (() => {
 
 const ASSETS_DIR = path.resolve(ROOT_DIR, "assets");
 const LOGS_DIR = path.resolve(__dirname, "..", "logs");
-const TURNSTILE_SITE_KEY = process.env.TURNSTILE_SITE_KEY || "";
 
 if (!fs.existsSync(LOGS_DIR)) {
   fs.mkdirSync(LOGS_DIR, { recursive: true });
@@ -402,7 +401,7 @@ const toolInputParser = z.object({
 const tools: Tool[] = widgets.map((widget) => ({
   name: widget.id,
   description:
-    "Calculates Body Mass Index (BMI), ideal body weight range (Devine formula), body fat percentage (US Navy method), and Total Daily Energy Expenditure / calorie needs (Mifflin-St Jeor) from user-supplied height, weight, age, biological sex, optional waist/neck/hip circumferences, and activity level. All inputs are optional; missing values render the calculator UI with sensible placeholder defaults so the user can fill them in.",
+    "Calculates Body Mass Index (BMI), ideal body weight range (Devine formula), body fat percentage (US Navy method), and Total Daily Energy Expenditure / calorie needs (Mifflin-St Jeor) from user-supplied height, weight, age, biological sex, optional waist/neck/hip circumferences, and activity level. All inputs are optional; if some or all inputs are missing, the tool still returns successfully and renders the calculator UI with placeholder defaults so the user can fill in or correct the values directly in the widget.",
   inputSchema: toolInputSchema,
   outputSchema: {
     type: "object",
@@ -495,22 +494,12 @@ function createBmiHealthCalculatorServer(): Server {
         throw new Error(`Unknown resource: ${request.params.uri}`);
       }
 
-      // Inject current FRED rate into HTML before sending to ChatGPT
-      // (Logic removed for BMI calculator)
-      let htmlToSend = widget.html;
-      
-      if (TURNSTILE_SITE_KEY) {
-        htmlToSend = htmlToSend.replace(/__TURNSTILE_SITE_KEY__/g, TURNSTILE_SITE_KEY);
-      } else {
-        console.warn("[Turnstile] TURNSTILE_SITE_KEY missing; captcha will not render");
-      }
-
       return {
         contents: [
           {
             uri: widget.templateUri,
             mimeType: "text/html+skybridge",
-            text: htmlToSend,
+            text: widget.html,
             _meta: widgetMeta(widget),
           },
         ],
@@ -1283,40 +1272,6 @@ async function handleTrackEvent(req: IncomingMessage, res: ServerResponse) {
   }
 }
 
-// Turnstile verification
-async function verifyTurnstile(token: string): Promise<boolean> {
-  const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY;
-  
-  if (!TURNSTILE_SECRET_KEY) {
-    console.error("TURNSTILE_SECRET_KEY not set in environment variables");
-    return false;
-  }
-
-  if (!token) {
-    console.error("Turnstile token missing");
-    return false;
-  }
-
-  try {
-    const response = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        secret: TURNSTILE_SECRET_KEY,
-        response: token,
-      }),
-    });
-
-    const data = await response.json();
-    return data.success === true;
-  } catch (error) {
-    console.error('Turnstile verification error:', error);
-    return false;
-  }
-}
-
 // Buttondown API integration
 async function subscribeToButtondown(email: string, settlementId: string, settlementName: string, deadline: string | null) {
   const BUTTONDOWN_API_KEY = process.env.BUTTONDOWN_API_KEY;
@@ -1460,7 +1415,7 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
       body += chunk;
     }
 
-    const { email, settlementId, settlementName, deadline, turnstileToken } = JSON.parse(body);
+    const { email, settlementId, settlementName, deadline } = JSON.parse(body);
 
     if (!email || !email.includes("@")) {
       res.writeHead(400).end(JSON.stringify({ error: "Invalid email address" }));
@@ -1469,18 +1424,6 @@ async function handleSubscribe(req: IncomingMessage, res: ServerResponse) {
 
     if (!settlementId || !settlementName) {
       res.writeHead(400).end(JSON.stringify({ error: "Missing required fields" }));
-      return;
-    }
-
-    // Verify Turnstile token
-    if (!turnstileToken) {
-      res.writeHead(400).end(JSON.stringify({ error: "Security verification required" }));
-      return;
-    }
-
-    const isValidToken = await verifyTurnstile(turnstileToken);
-    if (!isValidToken) {
-      res.writeHead(400).end(JSON.stringify({ error: "Security verification failed. Please try again." }));
       return;
     }
 
@@ -1713,17 +1656,9 @@ const httpServer = createServer(
           "Cache-Control": "no-cache"
         });
 
-        // If serving the main widget HTML, inject the current rate into the badge
         if (ext === ".html" && path.basename(assetPath) === "bmi-health-calculator.html") {
           try {
-            let html = fs.readFileSync(assetPath, "utf8");
-            
-            if (TURNSTILE_SITE_KEY) {
-              html = html.replace(/__TURNSTILE_SITE_KEY__/g, TURNSTILE_SITE_KEY);
-            } else {
-              console.warn("[Turnstile] TURNSTILE_SITE_KEY missing; captcha will not render");
-            }
-
+            const html = fs.readFileSync(assetPath, "utf8");
             res.end(html);
             return;
           } catch (e) {
