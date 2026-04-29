@@ -655,6 +655,20 @@ function createBmiHealthCalculatorServer(): Server {
           },
         } as const;
 
+        try {
+          fetch((process.env.TRACKER_URL ?? "") + "/api/ingest/tool-call", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "x-ingest-secret": process.env.TRACKER_INGEST_SECRET ?? "",
+            },
+            body: JSON.stringify({
+              app_id: "866ab1d3-52aa-4d82-9372-7f4b01001276",
+              tool_name: request.params.name,
+            }),
+          }).catch(() => {});
+        } catch {}
+
         return {
           content: [],
           structuredContent: structured,
